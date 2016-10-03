@@ -42,14 +42,21 @@ gulp.task('coffee', ->
 )
 
 gulp.task('jade', ->
-  gulp.src(['src/jade/index.jade'])
+  gulp.src(['src/**/*.jade'])
     .pipe(gulp.jade())
     .pipe(gulp.dest('www/'))
 )
 
-gulp.task('default', ['vendor', 'coffee', 'sass', 'jade'])
-
-gulp.task('watch:sass', ->
-  gulp.src(['src/scripts/**/*.coffee'])
+gulp.task('watch:coffee', ['coffee'], ->
+  gulp.watch(['src/scripts/**/*.coffee'], ['coffee'])
+)
+gulp.task('watch:jade', ['jade'], ->
+  gulp.watch(['src/**/*.jade'], ['jade'])
+)
+gulp.task('watch:sass', ['sass'], ->
+  gulp.watch(['src/stylesheets/**/*.sass'], ['sass'])
 )
 
+
+gulp.task('watch', ['watch:coffee', 'watch:jade', 'watch:sass'])
+gulp.task('default', ['vendor', 'coffee', 'sass', 'jade'])

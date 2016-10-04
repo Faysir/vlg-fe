@@ -5,10 +5,14 @@ html
     head
         meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
         title Vanlunge
-        link(rel="stylesheet", href="vendor/stylesheets/bootstrap.min.css")
-        //link(rel="stylesheet", href="vendor/stylesheets/style.css")
+        //link(rel="stylesheet", href="vendor/stylesheets/bootstrap.min.css")
+        link(rel="stylesheet", href="vendor/stylesheets/style.css")
         script(src="vendor/scripts/jquery.min.js")
         //script(src="vendor/scripts/bootstrap.min.js")
         script(src="vendor/scripts/angular.min.js")
+        script(src="vendor/scripts/angular-route.min.js")
+        script(src="vendor/scripts/angular-ui-router.min.js")
         script(src="vendor/scripts/script.js")
-    body
+    body(ng-app="vlg")
+        .container
+            ui-view

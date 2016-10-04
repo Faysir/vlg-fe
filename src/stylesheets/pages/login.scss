@@ -1,0 +1,68 @@
+
+.pg.pg-login {
+  background-image: url("../images/login/bg.png");
+
+  .login-frame {
+    width: 610px;
+    height: 284px;
+    border-radius: 10px;
+    position: absolute;
+    right: 120px;
+    bottom: 140px;
+    background-color: rgba(22, 22, 22, 0.8);
+    border: 2px #666666 solid;
+  }
+
+  .login-input {
+    display: block;
+    position: absolute;
+    background-color: black;
+    height: 60px;
+    width: 426px;
+    left: 74px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-size: auto 40px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 10px 10px 10px 60px;
+    color: white;
+    background-color: black;
+  }
+  .login-input.input-username {
+    top: 15px;
+    background-image: url("../images/login/button-username.png");
+  }
+  .login-input.input-password {
+    top: 85px;
+    background-image: url("../images/login/button-password.png");
+  }
+
+  .login-button-bg {
+    display: block;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    left: 450px;
+    top: 30px;
+    background-color: rgb(22, 22, 22);
+  }
+  .login-button {
+    display: block;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 80px;
+    left: 460px;
+    top: 40px;
+    background-image: url("../images/login/button-login.png");
+    cursor: pointer;
+    background-size: 100%;
+    &:hover {
+      border: 1px #666666 solid;
+    }
+  }
+
+}

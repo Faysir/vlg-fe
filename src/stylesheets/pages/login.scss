@@ -1,4 +1,6 @@
 
+@import "../common/mixin";
+
 .pg.pg-login {
   background-image: url("../images/login/bg.png");
 
@@ -13,7 +15,7 @@
     border: 2px #666666 solid;
   }
 
-  .login-input {
+  input.login-input {
     display: block;
     position: absolute;
     background-color: black;
@@ -29,12 +31,13 @@
     padding: 10px 10px 10px 60px;
     color: white;
     background-color: black;
+    &:-webkit-autofill { background-color: transparent; }
   }
-  .login-input.input-username {
+  input.login-input.input-username {
     top: 15px;
     background-image: url("../images/login/button-username.png");
   }
-  .login-input.input-password {
+  input.login-input.input-password {
     top: 85px;
     background-image: url("../images/login/button-password.png");
   }
@@ -49,7 +52,7 @@
     top: 30px;
     background-color: rgb(22, 22, 22);
   }
-  .login-button {
+  a.login-button {
     display: block;
     position: absolute;
     width: 80px;
@@ -58,11 +61,38 @@
     left: 460px;
     top: 40px;
     background-image: url("../images/login/button-login.png");
-    cursor: pointer;
     background-size: 100%;
+    @include default-anchor();
     &:hover {
       border: 1px #666666 solid;
+      left: 459px;
+      top: 39px;
     }
+  }
+
+  a.forgot {
+    display: block;
+    position: absolute;
+    width: 180px;
+    height: 28px;
+    left: 373px;
+    top: 155px;
+    line-height: 28px;
+    font-size: 20px;
+    @include default-anchor(white);
+    &:hover { text-decoration: underline; }
+  }
+
+  a.register-button {
+    display: block;
+    position: absolute;
+    width: 353px;
+    height: 83px;
+    left: 130px;
+    top: 185px;
+    background-image: url("../images/login/button-register.png");
+    background-size: 100%;
+    @include default-anchor();
   }
 
 }

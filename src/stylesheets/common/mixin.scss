@@ -1,0 +1,10 @@
+@mixin default-anchor($color: initial) {
+  &,
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: $color;
+    text-decoration: none;
+  }
+}

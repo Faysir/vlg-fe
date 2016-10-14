@@ -1,7 +1,7 @@
 
 @import "../common/mixin";
 
-.main-wrapper {
+.pg.pg-main {
 
   & {
     background-image: url( ../images/main/main-bg.png );
@@ -13,6 +13,7 @@
     top: 30px;
     width: 266px;
     height: 98px;
+    background-size: 100% 100%;
   }
 
   .left-menu {
@@ -27,6 +28,13 @@
       white-space: nowrap;
       line-height: 36px;
       font-size: 28px;
+      color: #00a2e9;
+      background-image: url(../images/main/left-menu-item.png);
+      background-size: 100% 100%;
+      &:hover,
+      &.active {
+        background-image: url(../images/main/left-menu-item-active.png);
+      }
     }
   }
 
@@ -60,66 +68,103 @@
     height: 185px;
   }
 
-  .circle-list-lg {
-    width: 130px;
-  }
-  .circle-item-lg {
-    position: relative;
-    width: 130px;
-    height: 130px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    border-radius: 50%;
-    border: 1px rgba(0, 162, 233, 1) solid;
-    & > * {
-      display: block;
-      position: absolute;
-      top: 12px;
-      left: 5px;
-      width: 104px;
-      height: 90px;
-      border-radius: 50%;
-      background-color: rgba(0, 162, 233, 0.3);
-      & > * {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        width: 114px;
-        height: 114px;
-        border-radius: 50%;
-        background-color: rgba(0, 162, 233, 0.3);
-        font-size: 26px;
-        line-height: 90px;
-        white-space: nowrap;
-        text-align: center;
-      }
-    }
-  }
+  //.circle-list-lg {
+  //  width: 130px;
+  //}
+  //.circle-item-lg {
+  //  position: relative;
+  //  width: 130px;
+  //  height: 130px;
+  //  box-sizing: border-box;
+  //  -moz-box-sizing: border-box;
+  //  border-radius: 50%;
+  //  border: 1px rgba(0, 162, 233, 1) solid;
+  //  & > * {
+  //    display: block;
+  //    position: absolute;
+  //    top: 12px;
+  //    left: 5px;
+  //    width: 104px;
+  //    height: 90px;
+  //    border-radius: 50%;
+  //    background-color: rgba(0, 162, 233, 0.3);
+  //    & > * {
+  //      position: absolute;
+  //      top: 8px;
+  //      left: 8px;
+  //      width: 114px;
+  //      height: 114px;
+  //      border-radius: 50%;
+  //      background-color: rgba(0, 162, 233, 0.3);
+  //      font-size: 26px;
+  //      line-height: 90px;
+  //      white-space: nowrap;
+  //      text-align: center;
+  //    }
+  //  }
+  //}
+  //
+  //.circle-list-sm {
+  //  width: 110px;
+  //}
+  //.circle-item-sm {
+  //  position: relative;
+  //  width: 110px;
+  //  height: 110px;
+  //  box-sizing: border-box;
+  //  -moz-box-sizing: border-box;
+  //  border-radius: 50%;
+  //  background-color: rgba(0, 162, 233, 0.3);
+  //  & > * {
+  //    display: block;
+  //    position: absolute;
+  //    top: 12px;
+  //    left: 3px;
+  //    width: 104px;
+  //    height: 86px;
+  //    border-radius: 50%;
+  //    background-color: rgba(0, 162, 233, 0.3);
+  //    font-size: 26px;
+  //    line-height: 90px;
+  //    white-space: nowrap;
+  //    text-align: center;
+  //  }
+  //}
 
-  .circle-list-sm {
+  .circle-list1 {
     width: 110px;
   }
-  .circle-item-sm {
-    position: relative;
+  .circle-item1 {
     width: 110px;
     height: 110px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    border-radius: 50%;
-    background-color: rgba(0, 162, 233, 0.3);
-    & > * {
-      display: block;
-      position: absolute;
-      top: 12px;
-      left: 3px;
-      width: 104px;
-      height: 86px;
-      border-radius: 50%;
-      background-color: rgba(0, 162, 233, 0.3);
-      font-size: 26px;
-      line-height: 90px;
-      white-space: nowrap;
-      text-align: center;
+    line-height: 110px;
+    font-size: 26px;
+    text-align: center;
+    white-space: nowrap;
+    color: white;
+    background-image: url(../images/main/button-circle1.png);
+    background-size: 100% 100%;
+    &:hover,
+    &.active {
+      background-image: url(../images/main/button-circle1-active.png);
+    }
+  }
+  .circle-list2 {
+    width: 130px;
+  }
+  .circle-item2 {
+    width: 130px;
+    height: 130px;
+    line-height: 130px;
+    font-size: 26px;
+    text-align: center;
+    white-space: nowrap;
+    color: white;
+    background-image: url(../images/main/button-circle2.png);
+    background-size: 100% 100%;
+    &:hover,
+    &.active {
+      background-image: url(../images/main/button-circle2-active.png);
     }
   }
 }

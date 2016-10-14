@@ -1,3 +1,3 @@
 
-angular.module('vlg', ['ngRoute', 'ui.router'])
+rootModule = angular.module('vlg', ['ngRoute', 'ui.router'])
 

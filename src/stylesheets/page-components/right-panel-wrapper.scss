@@ -1,0 +1,71 @@
+.pg.pg-main {
+  .right-panel-wrapper {
+    position: absolute;
+    width: 190px;
+    right: 12px;
+    top: 140px;
+    .right-panel {
+      width: 190px;
+      height: 390px;
+      .panel-title {
+        height: 54px;
+        line-height: 54px;
+        font-size: 22px;
+        color: #1ba3e6;
+        .icon-sphere {
+          vertical-align: top;
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          margin: 13px;
+          background-size: 100% 100%;
+          background-image: url(../images/main/sphere-dot.png);
+        }
+      }
+      .panel-body {
+        height: 320px;
+        background-color: rgba(9, 130, 174, 0.6);
+        border-radius: 14px;
+        width: 175px;
+        .user-item {
+          height: 34px;
+          width: 154px;
+          margin: 0 10px;
+          border-bottom: 1px white solid;
+          .user-icon {
+            background-size: 100% 100%;
+            width: 14px;
+            height: 19px;
+            margin: 7px 0 8px -3px;
+            float: left;
+          }
+          .user-name,
+          .user-status {
+            height: 34px;
+            line-height: 34px;
+          }
+          .user-name {
+            font-size: 10px;
+            color: white;
+            width: 77px;
+            margin-left: 27px;
+            margin-right: 50px;
+          }
+          .user-status {
+            font-size: 10px;
+            width: 40px;
+            float: right;
+          }
+          &.online {
+            .user-icon { background-image: url(../images/main/person-white.png); }
+            .user-status { color: red; }
+          }
+          &.offline {
+            .user-icon { background-image: url(../images/main/person-black.png); }
+            .user-status { color: black; }
+          }
+        }
+      }
+    }
+  }
+}

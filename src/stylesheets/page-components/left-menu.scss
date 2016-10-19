@@ -1,0 +1,25 @@
+.pg.pg-main {
+  .left-menu {
+    position: absolute;
+    left: 28px;
+    top: 140px;
+
+    .menu-item {
+      width: 202px;
+      height: 36px;
+      margin-top: 70px;
+      white-space: nowrap;
+      line-height: 36px;
+      font-size: 28px;
+      color: #00a2e9;
+      background-image: url(../images/main/left-menu-item.png);
+      background-size: 100% 100%;
+      cursor: pointer;
+      padding: 0 10px;
+      &:hover,
+      &.active {
+        background-image: url(../images/main/left-menu-item-active.png);
+      }
+    }
+  }
+}

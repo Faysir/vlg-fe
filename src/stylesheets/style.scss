@@ -2,5 +2,9 @@
 @import "common/container";
 
 @import "pages/login";
-@import "pages/main-wrapper";
+
+@import "page-components/main-wrapper";
+@import "page-components/left-menu";
+@import "page-components/right-panel-wrapper";
+
 @import "pages/hall";

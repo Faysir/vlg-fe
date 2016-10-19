@@ -32,10 +32,21 @@ $(window).resize(->
 #
 #  return true
 
-  marginVer = (windowHeight / resizeRate - defaultHeight) / 2
-  marginHor = (windowWidth / resizeRate - defaultWidth) / 2
+#  marginVer = (windowHeight / resizeRate - defaultHeight) / 2
+#  marginHor = (windowWidth / resizeRate - defaultWidth) / 2
+#  $('.container').css({
+#    'zoom': resizeRate
+#    'margin-top': marginVer + 'px'
+#    'margin-bottom': marginVer + 'px'
+#    'margin-left': marginHor + 'px'
+#    'margin-right': marginHor + 'px'
+#  })
+
+  marginVer = (windowHeight - defaultHeight * resizeRate ) / 2
+  marginHor = (windowWidth - defaultWidth * resizeRate ) / 2
   $('.container').css({
-    'zoom': resizeRate
+    'transform': 'scale(' + resizeRate + ')'
+    'transform-origin': '0 0'
     'margin-top': marginVer + 'px'
     'margin-bottom': marginVer + 'px'
     'margin-left': marginHor + 'px'

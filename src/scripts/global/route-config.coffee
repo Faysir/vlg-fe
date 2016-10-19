@@ -8,6 +8,10 @@ angular.module('vlg')
     url: '/login'
     templateUrl: "pages/login/login.html"
   })
+  .state('hall', {
+    url: '/hall'
+    templateUrl: "pages/hall/hall.html"
+  })
 
   $urlRouterProvider.otherwise('/login')
 

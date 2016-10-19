@@ -1,0 +1,18 @@
+.right-panel
+    .panel-title
+        .icon-sphere
+        span 好友
+    .panel-body
+        .user-item(ng-repeat="userItem in user.friendList", ng-class="userItem.online ? 'online' : 'offline'")
+            .user-icon
+            .user-status {{ userItem.status }}
+            .user-name {{ userItem.name }}
+.right-panel
+    .panel-title
+        .icon-sphere
+        span 家族
+    .panel-body
+        .user-item(ng-repeat="userItem in user.friendList", ng-class="userItem.online ? 'online' : 'offline'")
+            .user-icon
+            .user-status {{ userItem.status }}
+            .user-name {{ userItem.name }}

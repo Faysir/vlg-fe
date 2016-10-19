@@ -1,9 +1,9 @@
 
-.pg.pg-login
+.pg.pg-login(ng-controller="loginCtl")
     .login-frame
         input.login-input.input-username#iu(placeholder="Username", type="text")
         input.login-input.input-password#ip(placeholder="Password", type="password")
         .login-button-bg
-        a.login-button(href="javascript:;")
+        a.login-button(href="javascript:;", ng-click="loginAction()")
         a.forgot(href="javascript:;") Forgot Details ?
         a.register-button(href="javascript:;")

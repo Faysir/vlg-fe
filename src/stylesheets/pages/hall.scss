@@ -1,8 +1,117 @@
 
 @import "../common/mixin";
 
-.pg-hall {
+.pg.pg-main.pg-hall {
   .top-title {
-    background-image: url(../images/hall/top-title.png);
+    background-image: url(../images/hall/title-button.png);
+  }
+  .center-panel {
+    width: 1325px;
+    height: 750px;
+  }
+
+  .room-list {
+    width: 1305px;
+    height: 716px;
+    margin: 16px 10px;
+    .room-item {
+      display: inline-block;
+      width: 245px;
+      height: 342px;
+      margin: 8px;
+      background-image: url(../images/hall/bg-room.png);
+      position: relative;
+      .room-name,
+      .room-status,
+      .room-member-count {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 16px;
+      }
+      .room-name {
+        top: 0;
+        height: 50px;
+        line-height: 50px;
+      }
+      .room-status {
+        top: 280px;
+        height: 26px;
+        line-height: 26px;
+      }
+      .room-member-count {
+        top: 306px;
+        height: 26px;
+        line-height: 26px;
+      }
+    }
+  }
+
+  .circle-list2 {
+    position: absolute;
+    left: 1331px;
+    top: 20px;
+  }
+
+  .bottom-panel {
+    .paginator {
+      position: absolute;
+      left: 810px;
+      top: 10px;
+      height: 44px;
+      width: 192px;
+      .center-sphere {
+        margin: 0 74px;
+        width: 44px;
+        height: 44px;
+        background-image: url(../images/main/sphere-dot.png);
+        background-size: 100% 100%;
+      }
+      .nav-prev,
+      .nav-next {
+        width: 62px;
+        height: 34px;
+        margin: 5px 0;
+        background-size: 100% 100%;
+        cursor: pointer;
+      }
+      .nav-prev {
+        float: left;
+        background-image: url(../images/main/triangle-left.png);
+      }
+      .nav-next {
+        float: right;
+        background-image: url(../images/main/triangle-right.png);
+      }
+    }
+
+    .button-group {
+      position: absolute;
+      right: 6px;
+      bottom: 10px;
+      width: (135px + 12px) * 4;
+      height: (47px + 12px) * 2;
+      .button-item {
+        display: inline-block;
+        margin: 6px;
+        width: 135px;
+        height: 47px;
+        line-height: 47px;
+        border-radius: 10px;
+        background-color: rgba(9, 130, 174, 0.8);
+        font-size: 24px;
+        text-align: center;
+        vertical-align: top;
+        @include default-anchor(white);
+        &.no-bg {
+          background: none;
+        }
+        &:hover {
+          background-color: rgba(9, 130, 174, 1);
+        }
+      }
+    }
   }
 }

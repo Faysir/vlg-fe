@@ -1,5 +1,6 @@
 
 @import "../common/mixin";
+@import "../common/variables";
 
 .pg.pg-main {
 
@@ -10,17 +11,22 @@
   .top-title {
     position: absolute;
     left: 280px;
-    top: 30px;
+    top: 20px;
     width: 266px;
     height: 98px;
     background-size: 100% 100%;
+    background-image: url(../images/main/title-button.png);
+    line-height: 98px;
+    text-align: center;
+    font-size: 38px;
+    color: white;
   }
 
   .center-box {
     position: absolute;
     width: 1440px;
     height: 735px;
-    top: 140px;
+    top: 130px;
     left: 250px;
   }
 
@@ -36,16 +42,18 @@
     width: 110px;
   }
   .circle-item1 {
+    display: block;
     width: 110px;
     height: 110px;
     line-height: 110px;
-    font-size: 26px;
+    font-size: 20px;
     text-align: center;
     white-space: nowrap;
     color: white;
     cursor: pointer;
     background-image: url(../images/main/button-circle1.png);
     background-size: 100% 100%;
+    @include default-anchor(white);
     &:hover,
     &.active {
       background-image: url(../images/main/button-circle1-active.png);
@@ -55,6 +63,7 @@
     width: 130px;
   }
   .circle-item2 {
+    display: block;
     width: 130px;
     height: 130px;
     line-height: 130px;
@@ -65,6 +74,7 @@
     cursor: pointer;
     background-image: url(../images/main/button-circle2.png);
     background-size: 100% 100%;
+    @include default-anchor(white);
     &:hover,
     &.active {
       background-image: url(../images/main/button-circle2-active.png);
@@ -74,6 +84,33 @@
   .center-panel {
     background-color: rgba(20, 22, 56, 0.7);
     border-radius: 12px;
-    border: 1px rgb(6, 62, 88) solid;
+    border: 2px rgb(6, 62, 88) solid;
+    box-sizing: border-box;
+  }
+
+  .bottom-panel .button-group {
+    position: absolute;
+    display: block;
+    right: 10px;
+    bottom: 10px;
+    .button-item {
+      display: inline-block;
+      margin: 6px;
+      width: $grouped-button-width;
+      height: $grouped-button-height;
+      line-height: $grouped-button-height;
+      border-radius: 10px;
+      background-color: rgba(9, 130, 174, 0.8);
+      font-size: 24px;
+      text-align: center;
+      vertical-align: top;
+      @include default-anchor(white);
+      &.no-bg {
+        background: none;
+      }
+      &:hover {
+        background-color: rgba(9, 130, 174, 1);
+      }
+    }
   }
 }

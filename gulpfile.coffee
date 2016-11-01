@@ -75,5 +75,6 @@ gulp.task('watch:scss', ['scss'], ->
 
 gulp.task('watch', ['vendor', 'watch:coffee', 'watch:jade', 'watch:scss'])
 gulp.task('deploy', ['vendor', 'coffee', 'scss', 'jade'])
+gulp.task('deploy_src', ['vendor:image', 'coffee', 'scss', 'jade'])
 
 gulp.task('default', ['watch'])

@@ -1,10 +1,8 @@
 
 @import "../common/mixin";
+@import "../common/variables";
 
 .pg.pg-main.pg-hall {
-  .top-title {
-    background-image: url(../images/hall/title-button.png);
-  }
   .center-panel {
     width: 1325px;
     height: 750px;
@@ -91,26 +89,10 @@
       position: absolute;
       right: 6px;
       bottom: 10px;
-      width: (135px + 12px) * 4;
-      height: (47px + 12px) * 2;
+      width: ($grouped-button-width + 12px) * 4;
+      height: ($grouped-button-height + 12px) * 2;
       .button-item {
-        display: inline-block;
         margin: 6px;
-        width: 135px;
-        height: 47px;
-        line-height: 47px;
-        border-radius: 10px;
-        background-color: rgba(9, 130, 174, 0.8);
-        font-size: 24px;
-        text-align: center;
-        vertical-align: top;
-        @include default-anchor(white);
-        &.no-bg {
-          background: none;
-        }
-        &:hover {
-          background-color: rgba(9, 130, 174, 1);
-        }
       }
     }
   }

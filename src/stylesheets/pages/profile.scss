@@ -1,0 +1,54 @@
+
+@import "../common/mixin";
+@import "../common/variables";
+
+.pg.pg-main.pg-profile {
+  .center-box {
+    width: 1470px;
+    height: 770px;
+    background-color: transparent;
+    border: 5px rgba(27, 163, 230, 0.6) solid;
+    border-radius: 30px;
+
+    .person-view-wrapper {
+      position: absolute;
+      left: 17px;
+      top: 17px;
+      border: 10px rgb(27, 163, 230) solid;
+      border-radius: 27px;
+      width: 378px;
+      height: 717px;
+      //background-color: rgba(255, 255, 255, 0.8);
+      background-color: #b9ced9;
+    }
+
+    .circle-list1 {
+      position: absolute;
+      left: 418px;
+      top: 26px;
+    }
+
+
+    .info-box {
+      position: absolute;
+      left: 538px;
+      border: 5px rgba(27, 163, 230, 0.6) solid;
+      width: 914px;
+      height: 727px;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+  }
+
+  .bottom-panel {
+    .button-group {
+      right: 6px;
+      bottom: 10px;
+      width: ($grouped-button-width + 12px) * 2;
+      height: ($grouped-button-height + 12px) * 2;
+      .button-item {
+        margin: 6px;
+      }
+    }
+  }
+}

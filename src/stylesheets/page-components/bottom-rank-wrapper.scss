@@ -1,0 +1,42 @@
+
+.pg.pg-main {
+  .bottom-panel {
+    .bottom-rank-wrapper {
+      position: absolute;
+      width: 1460px;
+      height: 138px;
+      left: 97px;
+      bottom: 10px;
+      .rank-item {
+        position: relative;
+        display: inline-block;
+        width: 142px;
+        height: 134px;
+        border: 2px #1ba3e6 solid;
+        background-color: #332c2b;
+        border-radius: 12px;
+        .rank-number {
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          line-height: 134px;
+          text-align: center;
+          font-size: 72px;
+          color: #7690c6;
+          user-select: none;
+        }
+        .rank-avatar {
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}

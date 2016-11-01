@@ -1,3 +1,5 @@
+@import "../common/mixin";
+
 .pg.pg-main {
   .left-menu {
     position: absolute;
@@ -5,6 +7,7 @@
     top: 140px;
 
     .menu-item {
+      display: block;
       width: 202px;
       height: 36px;
       margin-top: 70px;
@@ -16,6 +19,7 @@
       background-size: 100% 100%;
       cursor: pointer;
       padding: 0 10px;
+      @include default-anchor(#00a2e9);
       &:hover,
       &.active {
         background-image: url(../images/main/left-menu-item-active.png);

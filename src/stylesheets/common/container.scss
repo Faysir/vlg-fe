@@ -1,7 +1,10 @@
+
+@import "variables";
+
 html, body {
   background-color: black;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   font-size: 12px;
   width: 100%;
   height: 100%;
@@ -9,18 +12,18 @@ html, body {
 }
 
 .container {
-  font-size: 0rem;
+  font-size: 0;
   //display: none;
   //background-color: white;
   position: relative;
-  width: 1920px;
-  height: 1080px;
+  width: $ui_width;
+  height: $ui_height;
   margin: auto;
 }
 
 .pg {
   position: relative;
-  width: 100%;
-  height: 100%;
-  background-size: 100% 100%;
+  width: $ui_width;
+  height: $ui_height;
+  background-size: $ui_width $ui_height;
 }

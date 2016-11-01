@@ -11,3 +11,8 @@ angular.module('vlg')
   restrict: 'C'
   templateUrl: './pages/page-components/right-panel-wrapper.html'
 )
+
+.directive('bottomRankWrapper', ->
+  restrict: 'C'
+  templateUrl: './pages/page-components/bottom-rank-wrapper.html'
+)

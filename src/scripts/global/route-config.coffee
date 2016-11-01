@@ -12,6 +12,10 @@ angular.module('vlg')
     url: '/hall'
     templateUrl: "pages/hall/hall.html"
   })
+  .state('profile', {
+    url: '/profile'
+    templateUrl: "pages/profile/profile.html"
+  })
 
   $urlRouterProvider.otherwise('/login')
 

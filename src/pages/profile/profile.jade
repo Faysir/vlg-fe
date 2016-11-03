@@ -1,18 +1,23 @@
 //
    Created by cosmozhang on 20/10/2016.
 
-.pg.pg-main.pg-profile
+.pg.pg-main.pg-profile(ng-controller="profileCtl")
     .top-title 杀人游戏
     .left-menu(section="profile")
     .center-box
         .person-view-wrapper
         .circle-list1
-            a.circle-item1.active(href="javascript:;") 统计信息
-            a.circle-item1(href="javascript:;") 我的物品
-            a.circle-item1(href="javascript:;") 视频照片
-            a.circle-item1(href="javascript:;") 历史记录
+            a.circle-item1(ui-sref-active="active", ui-sref="profile.statistics") 统计信息
+            a.circle-item1(ui-sref-active="active", ui-sref="profile.inventory")  我的物品
+            a.circle-item1(ui-sref-active="active", ui-sref="profile.none") 视频照片
+            a.circle-item1(ui-sref-active="active", ui-sref="profile.none") 历史记录
         ui-view
     .right-panel-wrapper
     .bottom-panel
         .bottom-rank-wrapper
+        .button-group
+            a.button-item(href="javascript:;") 打包
+            a.button-item(href="javascript:;") 聊天
+            a.button-item(href="javascript:;") 家族
+            a.button-item(href="javascript:;") 论坛
 

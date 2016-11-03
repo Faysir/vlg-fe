@@ -1,0 +1,29 @@
+//
+   Created by cosmozhang on 03/11/2016.
+
+.subpg-statistics(ng-init="subsection='statistics'")
+    .left-section
+        .row-name 美奈子家
+        .row-property 等级：0
+        .row-property 积分：0
+        .row-property 名气：0
+        .row-property 魅力：0
+        .row-property 金币：0
+        .row-property 胜率：10%
+        .row-property 0胜/0负
+        .row-remaining-points 余点：0
+    .right-box
+        .row-property(ng-repeat='fieldName in ["投票", "挡刀", "刀法", "验人", "屠城", "警胜", "匪胜", "民胜", "MVP"]')
+            .field-prompt  {{ fieldName }}:
+            .field-value   25
+            .field-rank    20名
+            .field-percent 60%
+            .field-rank    20名
+    .bottom-box
+        .property-box
+            .property-item(ng-repeat='fieldName in ["口才", "逻辑", "表演", "心理", "团队", "悍跳", "挡刀", "领导"]')
+                .property-text {{ fieldName }}：20
+                .button-add
+        .property-whole
+            .button-property 重置
+            .button-property 确定

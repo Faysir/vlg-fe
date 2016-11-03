@@ -15,6 +15,15 @@ angular.module('vlg')
   .state('profile', {
     url: '/profile'
     templateUrl: "pages/profile/profile.html"
+    abstract: true
+  })
+  .state('profile.statistics', {
+    url: '/statistics',
+    templateUrl: "pages/profile/statistics.html"
+  })
+  .state('profile.inventory', {
+    url: '/inventory',
+    templateUrl: "pages/profile/inventory.html"
   })
 
   $urlRouterProvider.otherwise('/login')

@@ -13,6 +13,7 @@
     height: 716px;
     margin: 16px 10px;
     .room-item {
+      @include default-anchor(white);
       display: inline-block;
       width: 245px;
       height: 342px;

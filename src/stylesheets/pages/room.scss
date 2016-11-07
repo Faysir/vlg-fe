@@ -1,4 +1,6 @@
-.pg.pg-main.pg-profile {
+@import "../common/mixin";
+
+.pg.pg-main.pg-room {
   .players-frame {
     $player-item-width: 177px;
     $player-item-height: 249px;
@@ -11,6 +13,8 @@
     left: 0;
     width: 1846px;
     height: 531px;
+    background-size: 100% 100%;
+    background-image: url("../images/room/players-frame.png");
     .players-list {
       position: absolute;
       left: 13px;
@@ -24,6 +28,8 @@
         height: $player-item-height;
         margin-right: $player-item-gap-hor;
         margin-bottom: $player-item-gap-ver;
+        background-size: 100% 100%;
+        background-image: url("../images/room/player-chair-card.png");
       }
     }
     .player-view {
@@ -190,7 +196,7 @@
         background-image: url("../images/room/button-up.png");
       }
       &.left-message-down-button {
-        top: 17px;
+        top: 454px;
         background-image: url("../images/room/button-down.png");
       }
     }
@@ -248,7 +254,7 @@
       display: block;
       position: absolute;
       left: 320px;
-      top: 357px;
+      top: 456px;
       width: 89px;
       height: 35px;
       @include default-anchor(transparent);
@@ -265,6 +271,8 @@
       top: 34px;
       width: ($adjust-bar-width + $adjust-bar-gap) * 3;
       .adjust-item {
+        display: inline-block;
+        vertical-align: top;
         width: $adjust-bar-width;
         margin-right: $adjust-bar-gap;
         .adjust-prompt {
@@ -273,16 +281,20 @@
           height: 68px;
           line-height: 34px;
           font-size: 26px;
+          color: white;
         }
         .adjust-bar {
           display: block;
+          position: relative;
           width: 100%;
-          height: 400px;
+          margin: 20px 0;
+          height: 400px - 20px * 2;
           background-size: 100% 100%;
           background-image: url("../images/room/adjust-bar.png");
           .adjust-button {
             display: block;
             position: absolute;
+            top: 400px - 20px * 2;
             width: $adjust-button-size;
             height: $adjust-button-size;
             margin-left: ($adjust-bar-width - $adjust-button-size) / 2;
@@ -297,6 +309,8 @@
     .time-bar {
       $char-width: 34px;
       $char-height: 41px;
+      position: absolute;
+      display: block;
       top: 30px;
       left: 600px;
       height: $char-height * 6;
@@ -305,9 +319,9 @@
       line-height: $char-height;
       text-align: center;
       color: white;
-      &:before {
-        content: "发言时间　秒";
-      }
+      //&:before {
+      //  content: "发言时间\n秒";
+      //}
       .time-number {
         display: block;
         position: absolute;
@@ -318,6 +332,73 @@
       }
     }
   }
-  .judger-area {
+
+  .button-player-tools {
+    display: block;
+    position: absolute;
+    left: 1393px;
+    top: 861px;
+    width: 40px;
+    height: 143px;
+    background-size: 100% 100%;
+    background-image: url("../images/room/button-player-tools.png");
+    @include default-anchor(transparent);
+  }
+
+  .judge-area {
+    display: block;
+    position: absolute;
+    top: 544px;
+    left: 1431px;
+    width: 0;
+    height: 0;
+    .right-message-box {
+      @include message-box();
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .right-message-input {
+      display: block;
+      position: absolute;
+      top: 476px;
+      left: 13px;
+      width: 240px;
+      height: 51px;
+      line-height: 51px;
+      font-size: 20px;
+      padding: 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #332c2b;
+      border-radius: 10px;
+    }
+    .right-message-send-button {
+      display: block;
+      position: absolute;
+      top: 476px;
+      left: 255px;
+      width: 74px;
+      height: 51px;
+      line-height: 51px;
+      text-align: center;
+      font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      @include default-anchor(#332c2b);
+    }
+    .right-message-channel-button {
+      display: block;
+      position: absolute;
+      top: 476px;
+      left: 333px;
+      width: 139px;
+      height: 51px;
+      line-height: 51px;
+      text-align: center;
+      font-size: 24px;
+      background-color: rgba(255, 0, 0, 0.9);
+      border-radius: 10px;
+      @include default-anchor(#332c2b);
+    }
   }
 }

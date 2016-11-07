@@ -25,6 +25,10 @@ angular.module('vlg')
     url: '/inventory',
     templateUrl: "pages/profile/inventory.html"
   })
+  .state('room', {
+    url: '/room',
+    templateUrl: "pages/room/room.html"
+  })
 
   $urlRouterProvider.otherwise('/login')
 

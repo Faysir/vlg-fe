@@ -53,6 +53,8 @@ $(window).resize(->
     'margin-right': marginHor + 'px'
   })
 
+  window.resizeRate = resizeRate
+
   return true
 )
 

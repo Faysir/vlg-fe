@@ -49,7 +49,7 @@ gulp.task('coffee', ->
     'src/scripts/global/**/*.coffee'
     'src/scripts/factories/**/*.coffee'
     'src/scripts/directives/**/*.coffee'
-    'src/scripts/controllers/**/*.coffee'
+    'src/scripts/modules/**/*.coffee'
   ])
     .pipe(gulp.concat('script.coffee'))
     .pipe(gulp.coffee())

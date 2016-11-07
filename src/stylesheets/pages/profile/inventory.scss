@@ -1,0 +1,98 @@
+@import "inventroy-buttons";
+@import "../../common/variables";
+
+// inventory subpage
+.pg.pg-main.pg-profile .center-box ui-view {
+  .subpg-inventory {
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    //width: 890px;
+    //height: 740px;
+
+    .category-list {
+      $item-width: 61px;
+      $item-height: 55px;
+      $item-gap: 2px;
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: $item-width;
+      height: ($item-height + $item-gap) * 12;
+      a.category-item {
+        display: block;
+        margin-bottom: $item-gap;
+        width: $item-width;
+        height: $item-height;
+        background-size: 100% 100%;
+        @include inventory-buttons;
+      }
+    }
+
+    $props-item-width: 157px;
+    $props-item-height: 161px;
+    $props-item-border: 8px;
+    $props-item-border-color: #00a2e9;
+    .props-list {
+      position: absolute;
+      left: 70px + $props-item-border;
+      top: 0 + $props-item-border;
+      width: ($props-item-width + $props-item-border) * 5 + $props-item-border;
+      height: ($props-item-height + $props-item-border) * 4 + $props-item-border;
+      //border: $props-item-border $props-props-item-border-color solid;
+      box-sizing: border-box;
+      .inventory-props-item {
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        margin-left: -$props-item-border;
+        margin-top: -$props-item-border;
+        border: $props-item-border $props-item-border-color solid;
+        width: $props-item-width;
+        height: $props-item-height;
+        background-color: white;
+        a.props-content {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        a.button-use {
+          display: block;
+          position: absolute;
+          width: 60px;
+          height: 30px;
+          line-height: 30px;
+          right: 3px;
+          bottom: 3px;
+          text-align: center;
+          font-size: 16px;
+          color: white;
+          @include default-anchor(white);
+          border-radius: 15px;
+          background-color: $props-item-border-color;
+          &:hover { background-color: lighten($props-item-border-color,10) }
+        }
+      }
+    }
+
+    .nav-button-group {
+      display: block;
+      position: absolute;
+      width: 220px;
+      height: 39px;
+      left: 70px;
+      top: ($props-item-height + $props-item-border) * 4 + $props-item-border + 12px;
+      @mixin nav-button($background-img) {
+        display: inline-block;
+        vertical-align: top;
+        width: 98px;
+        height: 39px;
+        margin-right: 12px;
+        background-size: 100% 100%;
+        background-image: url($background-img);
+      }
+      .nav-prev { @include nav-button("../images/profile/inventory/page-prev.png"); }
+      .nav-next { @include nav-button("../images/profile/inventory/page-next.png"); }
+    }
+  }
+}

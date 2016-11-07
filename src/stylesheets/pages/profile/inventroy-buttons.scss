@@ -1,0 +1,50 @@
+@mixin inventory-buttons {
+  &.cat-all {
+    background-image: url(../images/profile/inventory/cat-all.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-all.active.png); }
+  }
+  &.cat-background {
+    background-image: url(../images/profile/inventory/cat-background.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-background.active.png); }
+  }
+  &.cat-clothes {
+    background-image: url(../images/profile/inventory/cat-clothes.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-clothes.active.png); }
+  }
+  &.cat-earrings {
+    background-image: url(../images/profile/inventory/cat-earrings.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-earrings.active.png); }
+  }
+  &.cat-glasses {
+    background-image: url(../images/profile/inventory/cat-glasses.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-glasses.active.png); }
+  }
+  &.cat-groves {
+    background-image: url(../images/profile/inventory/cat-groves.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-groves.active.png); }
+  }
+  &.cat-hat {
+    background-image: url(../images/profile/inventory/cat-hat.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-hat.active.png); }
+  }
+  &.cat-necklace {
+    background-image: url(../images/profile/inventory/cat-necklace.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-necklace.active.png); }
+  }
+  &.cat-prop {
+    background-image: url(../images/profile/inventory/cat-prop.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-prop.active.png); }
+  }
+  &.cat-scarf {
+    background-image: url(../images/profile/inventory/cat-scarf.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-scarf.active.png); }
+  }
+  &.cat-shoe {
+    background-image: url(../images/profile/inventory/cat-shoe.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-shoe.active.png); }
+  }
+  &.cat-trousers {
+    background-image: url(../images/profile/inventory/cat-trousers.png);
+    &.active, &:hover { background-image: url(../images/profile/inventory/cat-trousers.active.png); }
+  }
+}

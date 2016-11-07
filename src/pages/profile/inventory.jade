@@ -1,3 +1,22 @@
 //
    Created by cosmozhang on 03/11/2016.
 
+.subpg-inventory(ng-controller="profileInventoryCtl")
+    .category-list
+        a.category-item.cat-all(href="javascript:;")
+        a.category-item.cat-hat(href="javascript:;")
+        a.category-item.cat-clothes(href="javascript:;")
+        a.category-item.cat-trousers(href="javascript:;")
+        a.category-item.cat-shoe(href="javascript:;")
+        a.category-item.cat-glasses(href="javascript:;")
+        a.category-item.cat-necklace(href="javascript:;")
+        a.category-item.cat-earrings(href="javascript:;")
+        a.category-item.cat-scarf(href="javascript:;")
+        a.category-item.cat-groves(href="javascript:;")
+        a.category-item.cat-background(href="javascript:;")
+        a.category-item.cat-prop(href="javascript:;")
+    .props-list
+        .inventory-props-item(ng-repeat="item in inventoryItems", item="item")
+    .nav-button-group
+        a.nav-prev(href="javascript:;")
+        a.nav-next(href="javascript:;")

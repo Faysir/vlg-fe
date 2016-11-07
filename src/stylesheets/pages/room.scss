@@ -1,0 +1,323 @@
+.pg.pg-main.pg-profile {
+  .players-frame {
+    $player-item-width: 177px;
+    $player-item-height: 249px;
+    $player-item-gap-hor: 13px;
+    $player-item-gap-ver: 11px;
+    $player-rows: 2;
+    $player-cols: 8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1846px;
+    height: 531px;
+    .players-list {
+      position: absolute;
+      left: 13px;
+      top: 10px;
+      width: ($player-item-width + $player-item-gap-hor) * $player-cols;
+      height: ($player-item-height + $player-item-gap-ver) * $player-rows;
+      .player-item {
+        display: inline-block;
+        vertical-align: top;
+        width: $player-item-width;
+        height: $player-item-height;
+        margin-right: $player-item-gap-hor;
+        margin-bottom: $player-item-gap-ver;
+      }
+    }
+    .player-view {
+      display: block;
+      position: absolute;
+      left: 1539px;
+      top: 20px;
+      width: 286px;
+      height: 488px;
+      background-color: #332c2b;
+    }
+  }
+
+  .right-top-button-group {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 1846px;
+    width: 74px;
+    height: 531px;
+    @mixin button-item($top, $left, $width, $height, $img) {
+      display: block;
+      position: absolute;
+      top: $top * 1px;
+      left: $left * 1px;
+      width: $width * 1px;
+      height: $height * 1px;
+      background-size: 100% 100%;
+      background-image: url($img);
+      @include default-anchor(transparent);
+    }
+    .button-chair-up { @include button-item(19, 7, 63, 58, "../images/room/button-chair-up.png"); }
+    .button-chair-down { @include button-item(82, 7, 63, 58, "../images/room/button-chair-down.png"); }
+    .button-mic-up { @include button-item(145, 7, 63, 58, "../images/room/button-mic-up.png"); }
+    .button-mic-down { @include button-item(209, 7, 63, 58, "../images/room/button-mic-down.png"); }
+    .button-charge { @include button-item(280, 11, 57, 100, "../images/room/button-charge.png"); }
+    .button-return-hall { @include button-item(389, 11, 57, 143, "../images/room/button-return-hall.png"); }
+  }
+
+  @mixin message-box {
+    display: block;
+    position: relative;
+    width: 481px;
+    height: 470px;
+    background-size: 100% 100%;
+    background-image: url("../images/room/message-box.png");
+    border-radius: 13px;
+    .title-box {
+      display: block;
+      position: absolute;
+      top: 70px;
+      left: 60px;
+      width: 361px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 22px;
+      color: #332c2b;
+    }
+    .content-box {
+      display: block;
+      position: absolute;
+      left: 14px;
+      top: 114px;
+      width: 455px;
+      height: 341px;
+      border-radius: 10px;
+      .content {
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #332c2b;
+      }
+    }
+  }
+  @mixin message-side-box {
+    display: block;
+    position: relative;
+    width: 209px;
+    height: 508px;
+    background-size: 100% 100%;
+    background-image: url("../images/room/message-side-box.png");
+    border-radius: 20px;
+    .content-box {
+      display: block;
+      position: absolute;
+      left: 16px;
+      top: 15px;
+      width: 177px;
+      height: 478px;
+      border-radius: 16px;
+      .content {
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #332c2b;
+      }
+    }
+  }
+
+  .left-message-area {
+    position: absolute;
+    top: 544px;
+    left: 8px;
+
+    .left-message-box {
+      @include message-box();
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .left-message-input {
+      display: block;
+      position: absolute;
+      top: 484px;
+      left: 12px;
+      width: 352px;
+      height: 42px;
+      line-height: 42px;
+      font-size: 20px;
+      padding: 0 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #332c2b;
+      border-radius: 10px;
+    }
+    .left-message-send-button {
+      display: block;
+      position: absolute;
+      top: 484px;
+      left: 387px;
+      width: 84px;
+      height: 42px;
+      line-height: 42px;
+      text-align: center;
+      font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      @include default-anchor(#332c2b);
+    }
+
+    .left-message-side-box {
+      @include message-side-box();
+      position: absolute;
+      top: 12px;
+      left: 506px;
+    }
+
+    .left-message-up-button,
+    .left-message-down-button {
+      display: block;
+      position: absolute;
+      left: 725px;
+      width: 43px;
+      height: 54px;
+      background-size: 100% 100%;
+      @include default-anchor(transparent);
+      &.left-message-up-button {
+        top: 17px;
+        background-image: url("../images/room/button-up.png");
+      }
+      &.left-message-down-button {
+        top: 17px;
+        background-image: url("../images/room/button-down.png");
+      }
+    }
+  }
+
+  .video-area {
+    display: block;
+    position: absolute;
+    top: 572px;
+    left: 766px;
+    width: 0;
+    height: 0;
+    .mirror {
+      $mirror-width: 410px;
+      $mirror-height: 460px;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 410px;
+      height: 460px;
+      .mirror-bg,
+      .mirror-frame {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: $mirror-width;
+        height: $mirror-height;
+        background-size: 100% 100%;
+        &.mirror-bg {
+          background-image: url("../images/room/mirror-inside.png");
+          z-index: 0;
+        }
+        &.mirror-frame {
+          background-image: url("../images/room/mirror-frame.png");
+          z-index: 2;
+        }
+      }
+      .mirror-content {
+        display: block;
+        position: absolute;
+        top: 14px;
+        left: 18px;
+        width: 374px;
+        height: 432px;
+        background-size: $mirror-width $mirror-height;
+        background-position: -18px -14px;
+        background-image: url("../images/room/mirror-inside.png");
+        border-radius: 50%;
+        z-index: 1;
+      }
+    }
+    .button-close-video {
+      display: block;
+      position: absolute;
+      left: 320px;
+      top: 357px;
+      width: 89px;
+      height: 35px;
+      @include default-anchor(transparent);
+      background-size: 100% 100%;
+      background-image: url("../images/room/button-close-video.png");
+    }
+    .adjust-box {
+      $adjust-bar-width: 28px;
+      $adjust-bar-gap: 22px;
+      $adjust-button-size: 38px;
+      display: block;
+      position: absolute;
+      left: 436px;
+      top: 34px;
+      width: ($adjust-bar-width + $adjust-bar-gap) * 3;
+      .adjust-item {
+        width: $adjust-bar-width;
+        margin-right: $adjust-bar-gap;
+        .adjust-prompt {
+          display: block;
+          width: $adjust-bar-width;
+          height: 68px;
+          line-height: 34px;
+          font-size: 26px;
+        }
+        .adjust-bar {
+          display: block;
+          width: 100%;
+          height: 400px;
+          background-size: 100% 100%;
+          background-image: url("../images/room/adjust-bar.png");
+          .adjust-button {
+            display: block;
+            position: absolute;
+            width: $adjust-button-size;
+            height: $adjust-button-size;
+            margin-left: ($adjust-bar-width - $adjust-button-size) / 2;
+            margin-top: - $adjust-button-size / 2;
+            @include default-anchor(transparent);
+            background-size: 100% 100%;
+            background-image: url("../images/room/adjust-button.png");
+          }
+        }
+      }
+    }
+    .time-bar {
+      $char-width: 34px;
+      $char-height: 41px;
+      top: 30px;
+      left: 600px;
+      height: $char-height * 6;
+      width: $char-width;
+      font-size: 32px;
+      line-height: $char-height;
+      text-align: center;
+      color: white;
+      &:before {
+        content: "发言时间　秒";
+      }
+      .time-number {
+        display: block;
+        position: absolute;
+        top: $char-height * 4;
+        width: $char-width;
+        height: $char-height;
+        white-space: nowrap;
+      }
+    }
+  }
+  .judger-area {
+  }
+}

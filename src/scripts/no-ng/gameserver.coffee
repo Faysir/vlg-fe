@@ -1,4 +1,4 @@
-GameServer = (gamecallback) ->
+window.GameServer = (gamecallback) ->
   this.wsurl = "ws://localhost:8080/vlgsocket/game"
   that = this
   stat = 0
@@ -52,8 +52,8 @@ GameServer = (gamecallback) ->
   this.xiazuo = ()->
     if(stat!=4&&stat!=5)
       return 1
-  ws.send("action xiazuo")
-  return 0
+    ws.send("action xiazuo")
+    return 0
 
   this.quitroom = ()->
     if(stat!=2)
@@ -77,13 +77,6 @@ GameServer = (gamecallback) ->
   on_roomplayer = gamecallback.onroomplayer
   on_speaker = gamecallback.onspeaker
 
-  ws = new WebSocket(this.wsurl)
-  ws.onopen = wsopen
-  ws.onclose = wsclose
-  ws.onmessage = wsmessage
-  ws.onerror = wserror
-  ws.binaryType = "blob"
-
   sendaudio = (blob)->
     ws.send(blob)
 
@@ -101,7 +94,7 @@ GameServer = (gamecallback) ->
     return
 
   wsmessage = (evt)->
-    if (typeof(evt.data) != "string"
+    if typeof(evt.data) != "string"
       bb = evt.data
       audio = new Audio();
       audio.src = window.URL.createObjectURL(bb)
@@ -153,69 +146,63 @@ GameServer = (gamecallback) ->
         on_roomplayer(p,s)
       when "shangzuo"
         r = Number(mess[1])
-      if(r == 0)
-      {	if(stat == 2)
-        stat = 4
-      else if(stat == 3)
-        stat =5
-    }
-    break;
-    when "xiazuo"
-    var r = Number(mess[1])
-      if(r == 0)
-      {	if(stat == 4)
-        stat = 2
-      else if(stat == 5)
-        stat =3
-    }
-    break;
-    when "shangmai"
-    var r = Number(mess[1])
-      if(r == 0)
-      {	if(stat == 2)
-        stat = 3
-      else if(stat == 4)
-        stat =5
-    }
-    break;
-    when "xiamai"
-    var r = Number(mess[1])
-      if(r == 0)
-      {	if(stat == 3)
-        stat = 2
-      else if(stat == 5)
-        stat =4
-    }
-    break;
-    when "speakover"
-    if(stat == 3)
-      stat = 2
-    else if(stat == 5)
-      stat =4
-    else if(stat == 7)
-      stat =6
-    break;
-    when "speaker"
-    var r = mess[1]
-      if(r=='#')
-      {	if(stat == 3)
-        stat = 2
-      else if(stat == 5)
-        stat =4
-      else if(stat == 7)
-        stat =6
-    }
-    on_speaker(mess[1])
-    break;
-    when "gamestart"
-    if(stat==4|| stat==5)
-      stat = 6;
-    break;
-    default:
-    break;
-    }
-    };
-  function wserror(evt){
+        if r == 0
+          if stat == 2
+            stat = 4
+          else if stat == 3
+            stat = 5
+      when "xiazuo"
+        r = Number(mess[1])
+        if(r == 0)
+          if stat == 4
+            stat = 2
+          else if stat == 5
+            stat = 3
+      when "shangmai"
+        r = Number(mess[1])
+        if r == 0
+          if stat == 2
+            stat = 3
+          else if stat == 4
+            stat = 5
+      when "xiamai"
+        r = Number(mess[1])
+        if r == 0
+          if stat == 3
+            stat = 2
+          else if stat == 5
+            stat = 4
+      when "speakover"
+        if stat == 3
+          stat = 2
+        else if stat == 5
+          stat =4
+        else if stat == 7
+          stat =6
+      when "speaker"
+        r = mess[1]
+        if r == '#'
+          if stat == 3
+            stat = 2
+          else if stat == 5
+            stat = 4
+          else if stat == 7
+            stat = 6
+        on_speaker(mess[1])
+      when "gamestart"
+        if (stat == 4 || stat == 5)
+          stat = 6
+      else
+        break
 
-  };
+  wserror = (evt)->
+    return
 
+  ws = new WebSocket(this.wsurl)
+  ws.onopen = wsopen
+  ws.onclose = wsclose
+  ws.onmessage = wsmessage
+  ws.onerror = wserror
+  ws.binaryType = "blob"
+
+# `function GameServer() { _GameServer.apply(undefined, arguments); }`

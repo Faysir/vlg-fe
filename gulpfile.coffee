@@ -13,6 +13,8 @@ gulp.task('vendor:js', ->
     'bower_components/angular-route/angular-route.min.js'
     'bower_components/angular-route/angular-route.min.map'
     'bower_components/angular-ui-router/release/angular-ui-router.min.js'
+    'bower_components/recorderjs/recorder.js'
+    'bower_components/recorderjs/recorderWorker.js'
   ])
   .pipe(gulp.dest('www/vendor/scripts/'))
 )
@@ -34,7 +36,12 @@ gulp.task('vendor:image', ->
   .pipe(gulp.dest('www/vendor/images/'))
 )
 
-gulp.task('vendor', ['vendor:css', 'vendor:js', 'vendor:image'])
+gulp.task('vendor:src_js', ->
+  gulp.src(['src/scripts/javascripts/**/*.js'])
+  .pipe(gulp.dest('www/vendor/scripts/'))
+)
+
+gulp.task('vendor', ['vendor:css', 'vendor:js', 'vendor:image', 'vendor:src_js'])
 
 gulp.task('scss', ->
   gulp.src(['src/stylesheets/style.scss'])
@@ -75,6 +82,6 @@ gulp.task('watch:scss', ['scss'], ->
 
 gulp.task('watch', ['vendor', 'watch:coffee', 'watch:jade', 'watch:scss'])
 gulp.task('deploy', ['vendor', 'coffee', 'scss', 'jade'])
-gulp.task('deploy_src', ['vendor:image', 'coffee', 'scss', 'jade'])
+gulp.task('deploy_src', ['vendor:image', 'vendor:src_js', 'coffee', 'scss', 'jade'])
 
 gulp.task('default', ['watch'])

@@ -3,7 +3,11 @@ window.GameServer = (gamecallback) ->
   that = this
   stat = 0
   user = null
+  passwd_en = null
+  passwd = null
   isspeaking = false
+  putongplayernum = null
+  jiazuplayernum = null
   # 0--not log in
   # 1--loged and in hall
   # 2--entered room , xiazuo , not mai
@@ -81,11 +85,6 @@ window.GameServer = (gamecallback) ->
     ws.send(blob)
 
   rec = new Qrecorder(sendaudio)
-  putongplayernum = null
-  jiazuplayernum = null
-  user = null
-  passwd_en = null
-  passwd = null
 
   wsopen = (evt)->
     return

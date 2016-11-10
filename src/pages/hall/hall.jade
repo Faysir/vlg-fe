@@ -1,13 +1,13 @@
 //
    Created by cosmozhang on 10/14/16.
 
-.pg.pg-main.pg-hall
+.pg.pg-main.pg-hall(ng-controller="hallCtl")
     .top-title 杀人游戏
     .left-menu(section="hall")
     .center-box
         .center-panel
             .room-list
-                a.room-item(href="#/room", ng-repeat="room in content.currentRoomList")
+                a.room-item(href="#/room/{{room.type}}/{{room.id}}", ng-repeat="room in content.currentRoomList")
                     .room-name {{ room.name }} \#{{ room.id }}
                     .room-status 空房间
                     .room-member-count {{ room.playerCount }}/{{ room.maxPlayerCount }}
@@ -19,8 +19,8 @@
     .right-panel-wrapper
     .bottom-panel
         .paginator
-            .nav-prev
-            .nav-next
+            .nav-prev(ng-click="prevPage()")
+            .nav-next(ng-click="nextPage()")
             .center-sphere
         .button-group
             a.button-item(href="javascript:;") 家族

@@ -15,7 +15,8 @@ angular.module('vlg')
       else []
     totalPages = Math.ceil(roomList.length / _pageSize)
     if p < 0 then p = 0
-    if p >= totalPages then p = totalPages
+    if p >= totalPages then p = (totalPages - 1)
+    _currentPage = p
     $scope.content.currentRoomList = roomList.slice(p * _pageSize, (p+1) * _pageSize)
 
   $scope.content =
@@ -32,10 +33,14 @@ angular.module('vlg')
   $scope.prevPage = () ->
     _loadPage(_currentPage - 1)
 
-  $scope.$on '$viewContentLoaded', ()->
-    console.log "$viewContentLoaded"
-    _loadPage(_currentPage)
-    return
+  $scope.$on '$onPutongRoomLoaded', ()->
+    if $scope.content.currentRoomFilter == $scope.ROOM_PUTONG
+      _loadPage(_currentPage)
+  $scope.$on '$onJiazuRoomLoaded', ()->
+    if $scope.content.currentRoomFilter == $scope.ROOM_JIAZU
+      _loadPage(_currentPage)
+  _loadPage(_currentPage)
+
 
   return
 

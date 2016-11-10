@@ -32,5 +32,26 @@ angular.module('vlg')
             callback false, status, error_message
     return
 
+  # @roomType: string (putong|jiazu)
+  # @roomId:   integer
+  # @callback: function (success, error_code, error_message)
+  serviceObj.enterRoom = (roomType, roomId, callback) ->
+    resultCode = -999
+    switch roomType
+      when "putong" then resultCode = GameService.gameServer.enterputong(roomId)
+      when "jiazu"  then resultCode = GameService.gameServer.enterjiazu(roomId)
+      else resultCode = 999
+    if resultCode != 0
+      callback false, resultCode, "发生系统错误"
+      return
+    GameService.$one 'enterroom', (status)->
+      if status != 0
+        callback false, 1000 + status, "无法进入房间"
+        return
+      callback true, 0, ""
+
+  serviceObj.getCurrentRoomPlayers = () ->
+    return
+
   return serviceObj
 ]

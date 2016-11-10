@@ -28,7 +28,7 @@ angular.module('vlg')
       eventName: eventName
     }
 
-  _callEvent = (eventExpr, args)->
+  _callEvent = (eventExpr, args...)->
     eventExprParsed = _validateEventExpression(eventExpr)
     eventName = eventExprParsed.eventName
     eventClass = eventExprParsed.eventClass
@@ -37,7 +37,7 @@ angular.module('vlg')
         if not c._del_flag
           if c.once
             c._del_flag = true
-          c.f.call(gameServer, args)
+          c.f.apply(gameServer, args)
     if _callbacks[eventName].length > 0
       for i in [(_callbacks[eventName].length - 1)..0]
         if _callbacks[eventName][i]._del_flag
@@ -135,10 +135,11 @@ angular.module('vlg')
       _callbacks[eventName].splice(0)
     return
 
-  serviceObj.$trigger = (eventExpr, args) ->
+  serviceObj.$trigger = (args...) ->
+    eventExpr = args[0]
     _validateEventExpression(eventExpr)
     setTimeout (()->
-      _callEvent(eventExpr, args)
+      _callEvent.apply(undefined, args)
     ), 0
 
   serviceObj.isConnected = ()->

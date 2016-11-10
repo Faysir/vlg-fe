@@ -75,6 +75,18 @@ window.GameServer = (gamecallback) ->
     ws.send("query key")
     return 0
 
+  this.query_roomputong = ()->
+    if stat == 0
+      return 1
+    ws.send "query roomputong"
+    return 0
+
+  this.query_roomjiazu = ()->
+    if stat == 0
+      return 1
+    ws.send "query roomjiazu"
+    return 0
+
   on_login = gamecallback.onlogin
   on_putong = gamecallback.onputong
   on_jiazu = gamecallback.onjiazu
@@ -218,6 +230,9 @@ window.GameServer = (gamecallback) ->
 
   this.isConnected = () ->
     return is_connected
+
+  this.isLoggedIn = ()->
+    return is_connected and (stat != 0)
 
   return
 

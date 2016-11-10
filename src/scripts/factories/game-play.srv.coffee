@@ -4,6 +4,11 @@ angular.module('vlg')
 
   serviceObj = {}
 
+  serviceObj.connect = ()->
+    return GameService.connect()
+  serviceObj.isConnected = ()->
+    return GameService.isConnected()
+
   # @username: string
   # @password: string
   # @callback: function (success, error_code, error_message)

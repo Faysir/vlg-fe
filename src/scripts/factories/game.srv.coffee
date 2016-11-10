@@ -11,6 +11,9 @@ angular.module('vlg')
     "login": []
     "roomplayer": []
     "speaker": []
+    "open": []
+    "close": []
+    "error": []
 
   _validateEventExpression = (eventExpr)->
     if (typeof eventExpr != "string") or (eventExpr.length == 0)
@@ -67,6 +70,18 @@ angular.module('vlg')
     _callEvent("speaker", speaker)
     return
 
+  on_open = (evt)->
+    _callEvent("open", evt)
+    return
+
+  on_close = (evt)->
+    _callEvent("close", evt)
+    return
+
+  on_error = (evt)->
+    _callEvent("error", evt)
+    return
+
   game_server_callback = {}
   game_server_callback.onlogin = on_login
   game_server_callback.onputong = on_roomputong_playernum
@@ -74,6 +89,9 @@ angular.module('vlg')
   game_server_callback.onenterroom = on_enterroom
   game_server_callback.onroomplayer = on_roomplayer
   game_server_callback.onspeaker = on_speaker
+  game_server_callback.onopen = on_open
+  game_server_callback.onclose = on_close
+  game_server_callback.onerror = on_error
 
   gameServer = new GameServer(game_server_callback);
 
@@ -122,6 +140,12 @@ angular.module('vlg')
     setTimeout (()->
       _callEvent(eventExpr, args)
     ), 0
+
+  serviceObj.isConnected = ()->
+    return gameServer.isConnected()
+
+  serviceObj.connect = ()->
+    return gameServer.connect()
 
   serviceObj.gameServer = gameServer
 

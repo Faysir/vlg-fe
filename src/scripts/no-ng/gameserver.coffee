@@ -18,6 +18,7 @@ window.GameServer = (gamecallback) ->
   # 7--entered room , game started , speaking
   # 8--entered room , game started , dead
   ws = null
+  is_connected = false
 
   this.enterputong = (roomid)->
     roomid = Number(roomid);
@@ -80,6 +81,9 @@ window.GameServer = (gamecallback) ->
   on_enterroom = gamecallback.onenterroom
   on_roomplayer = gamecallback.onroomplayer
   on_speaker = gamecallback.onspeaker
+  on_open = gamecallback.onopen
+  on_close = gamecallback.onclose
+  on_error = gamecallback.onerror
 
   sendaudio = (blob)->
     ws.send(blob)
@@ -87,9 +91,13 @@ window.GameServer = (gamecallback) ->
   rec = new Qrecorder(sendaudio)
 
   wsopen = (evt)->
+    is_connected = true
+    on_open(evt)
     return
 
   wsclose = (evt)->
+    is_connected = false
+    on_close(evt)
     return
 
   wsmessage = (evt)->
@@ -195,13 +203,22 @@ window.GameServer = (gamecallback) ->
         break
 
   wserror = (evt)->
+    is_connected = false
+    on_error(evt)
     return
 
-  ws = new WebSocket(this.wsurl)
-  ws.onopen = wsopen
-  ws.onclose = wsclose
-  ws.onmessage = wsmessage
-  ws.onerror = wserror
-  ws.binaryType = "blob"
+  this.connect = (wsurl) ->
+    ws = new WebSocket(wsurl || this.wsurl)
+    ws.onopen = wsopen
+    ws.onclose = wsclose
+    ws.onmessage = wsmessage
+    ws.onerror = wserror
+    ws.binaryType = "blob"
+    return
+
+  this.isConnected = () ->
+    return is_connected
+
+  return
 
 # `function GameServer() { _GameServer.apply(undefined, arguments); }`

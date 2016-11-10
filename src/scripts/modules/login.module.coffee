@@ -1,6 +1,6 @@
 angular.module('vlg')
 
-.controller('loginCtl', ['$scope', '$state', '$stateParams', 'GameService', ($scope, $state, $stageParams, GameService) ->
+.controller('loginCtl', ['$scope', '$state', '$stateParams', 'GamePlayService', 'DialogService', ($scope, $state, $stageParams, game, dialog) ->
 
   $scope.loginForm =
     username: ""
@@ -8,14 +8,11 @@ angular.module('vlg')
 
   $scope.loginAction = ->
     if $scope.loginForm.username and $scope.loginForm.password
-      GameService.$one 'login.loginCtl', (status) ->
-        if status == 0
+      game.login $scope.loginForm.username, $scope.loginForm.password, (success, errorCode, errorMessage) ->
+        if success
           $state.go('hall')
         else
-          alert "Login failed, error code: #{status}"
-      if 0 != GameService.gameServer.login($scope.loginForm.username, $scope.loginForm.password)
-        GameService.$off 'login.loginCtl'
-        alert "Login failed, stat error"
+          dialog.alert "登录失败，#{errorMessage}"
 
   return
 ])

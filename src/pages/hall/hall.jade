@@ -7,50 +7,14 @@
     .center-box
         .center-panel
             .room-list
-                a.room-item(href="#/room")
-                    .room-name 普通房
+                a.room-item(href="#/room", ng-repeat="room in content.currentRoomList")
+                    .room-name {{ room.name }} \#{{ room.id }}
                     .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
-                a.room-item(href="#/room")
-                    .room-name 普通房
-                    .room-status 空房间
-                    .room-member-count 1/20
+                    .room-member-count {{ room.playerCount }}/{{ room.maxPlayerCount }}
         .circle-list2
-            .circle-item2.active 普通房
+            .circle-item2(ng-click="changeRoomFilter(ROOM_PUTONG)", ng-class="content.currentRoomFilter == ROOM_PUTONG ? 'active' : ''") 普通房
             .circle-item2 精英房
-            .circle-item2 家族房
+            .circle-item2(ng-click="changeRoomFilter(ROOM_JIAZU)",  ng-class="content.currentRoomFilter == ROOM_JIAZU ? 'active' : ''")  家族房
             .circle-item2 大师房
     .right-panel-wrapper
     .bottom-panel

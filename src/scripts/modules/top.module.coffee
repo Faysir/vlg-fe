@@ -1,6 +1,6 @@
 angular.module('vlg')
 
-.controller('topCtl', ['$scope', '$state', '$stateParams', 'GameService', 'DialogService', ($scope, $state, $stageParams, GameService, dialog) ->
+.controller('topCtl', ['$scope', '$state', '$stateParams', 'GameService', 'DialogService', 'GameDataService', ($scope, $state, $stageParams, GameService, dialog) ->
   $scope.nav = {}
   $scope.nav.section = ""
 
@@ -11,7 +11,6 @@ angular.module('vlg')
     dialog.alert("与服务器的连接中断")
     $state.go('login')
 
-  console.log GameService.gameServer
   GameService.connect()
 
   return

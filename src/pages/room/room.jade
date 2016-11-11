@@ -4,15 +4,16 @@
 .pg.pg-main.pg-room(ng-controller="roomCtl")
     .players-frame
         .players-list
-            .player-item(ng-repeat="player in players")
+            .player-item(ng-repeat="player in content.players")
+                img(ng-src="{{player.imageUrl}}", ng-if="!player.invalid")
         .player-view
     .right-top-button-group
-        a.button-chair-up(href="javascript:;")
-        a.button-chair-down(href="javascript:;")
-        a.button-mic-up(href="javascript:;")
-        a.button-mic-down(href="javascript:;")
+        a.button-chair-up(href="javascript:;", ng-click="doShangzuo()")
+        a.button-chair-down(href="javascript:;", ng-click="doXiazuo()")
+        a.button-mic-up(href="javascript:;", ng-click="doShangmai()")
+        a.button-mic-down(href="javascript:;", ng-click="doXiamai()")
         a.button-charge(href="javascript:;")
-        a.button-return-hall(ui-sref="hall")
+        a.button-return-hall(href="javascript:;", ng-click="exitRoom()")
     .left-message-area
         .left-message-box
             .title-box 公共频道
@@ -48,7 +49,7 @@
             br
             br
             span 秒
-            .time-number 90
+            .time-number {{ content.leftSpeakTimeString }}
     a.button-player-tools(href="javascript:;")
     .judge-area
         .right-message-box

@@ -1,6 +1,6 @@
 angular.module('vlg')
 
-.controller('hallCtl', ['$scope', '$state', '$stateParams', 'GamePlayService', ($scope, $state, $stageParams, game) ->
+.controller('hallCtl', ['$scope', '$state', '$stateParams', 'GamePlayService', 'DialogService', ($scope, $state, $stageParams, game, dialog) ->
 
   # room filter constants
   $scope.ROOM_PUTONG = "putong"
@@ -41,6 +41,12 @@ angular.module('vlg')
       _loadPage(_currentPage)
   _loadPage(_currentPage)
 
+  $scope.enterRoom = (roomItem) ->
+    game.enterRoom roomItem.type, roomItem.id, (success, errorCode, errorMessage) ->
+      if not success
+        dialog.alert("无法进入房间，#{errorMessage}")
+        return
+      $state.go "room"
 
   return
 

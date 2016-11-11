@@ -18,18 +18,18 @@ angular.module('vlg')
     if username and password
       GameService.$off 'login'
       if 0 != (statusCode = GameService.gameServer.login(username, password))
-        callback false, -1, "发生系统错误"
+        if callback then callback false, -1, "发生系统错误"
       else
         GameService.$one 'login', (status) ->
           if status == 0
-            callback true, 0, ""
+            if callback then callback true, 0, ""
           else if status == 3 # user already online
-            callback true, 3, ""
+            if callback then callback true, 3, ""
           else
             error_message = "发生未知错误"
             if status == 1 then error_message = "用户尚未注册"
             if status == 2 then error_message = "密码错误，请重试"
-            callback false, status, error_message
+            if callback then callback false, status, error_message
     return
 
   # @roomType: string (putong|jiazu)
@@ -38,20 +38,78 @@ angular.module('vlg')
   serviceObj.enterRoom = (roomType, roomId, callback) ->
     resultCode = -999
     switch roomType
-      when "putong" then resultCode = GameService.gameServer.enterputong(roomId)
-      when "jiazu"  then resultCode = GameService.gameServer.enterjiazu(roomId)
-      else resultCode = 999
+      when "putong" then resultCode = - GameService.gameServer.enterputong(roomId)
+      when "jiazu"  then resultCode = - GameService.gameServer.enterjiazu(roomId)
+      else resultCode = -999
     if resultCode != 0
-      callback false, resultCode, "发生系统错误"
+      if callback then callback false, resultCode, "发生系统错误"
       return
     GameService.$one 'enterroom', (status)->
       if status != 0
-        callback false, 1000 + status, "无法进入房间"
+        if callback then callback false, 1000 + status, "无法进入房间"
         return
-      callback true, 0, ""
+      GameDataService.roomInfo.type = roomType
+      GameDataService.roomInfo.id = roomId
+      if callback then callback true, 0, ""
 
-  serviceObj.getCurrentRoomPlayers = () ->
-    return
+  # @callback: function (success, error_code, error_message)
+  serviceObj.exitRoom = (callback) ->
+    if 0 != GameService.gameServer.quitroom()
+      if callback then callback false, -1, "发生系统错误"
+      return
+    GameDataService.roomPlayers.shangzuo.splice 0
+    GameDataService.roomPlayers.shangmai.splice 0
+    GameDataService.roomPlayers.guanzhong.splice 0
+    if callback then callback true, 0, ""
+
+  serviceObj.getCurrentRoomShangzuoPlayers = () ->
+    return GameDataService.roomPlayers.shangzuo
+  serviceObj.getCurrentRoomShangmaiPlayers = () ->
+    return GameDataService.roomPlayers.shangmai
+  serviceObj.getCurrentRoomGuanzhongPlayers = () ->
+    return GameDataService.roomPlayers.guanzhong
+
+  serviceObj.doShangzuo = (callback) ->
+    if 0 != GameService.gameServer.shangzuo()
+      if callback then callback false, -1, "发生系统错误"
+      return
+    GameService.$one "shangzuo", (status)->
+      if status != 0
+        if callback then callback false, status, "发生未知错误(#{status})"
+        return
+      if callback then callback true, 0, ""
+  serviceObj.doXiazuo = (callback) ->
+    if 0 != GameService.gameServer.xiazuo()
+      if callback then callback false, -1, "发生系统错误"
+      return
+    GameService.$one "xiazuo", (status)->
+      if status != 0
+        if callback then callback false, status, "发生未知错误(#{status})"
+        return
+      if callback then callback true, 0, ""
+  serviceObj.doShangmai = (callback) ->
+    if 0 != GameService.gameServer.shangmai()
+      if callback then callback false, -1, "发生系统错误"
+      return
+    GameService.$one "shangmai", (status)->
+      if status != 0
+        if callback then callback false, status, "发生未知错误(#{status})"
+        return
+      if callback then callback true, 0, ""
+  serviceObj.doXiamai = (callback) ->
+    if 0 != GameService.gameServer.xiamai()
+      if callback then callback false, -1, "发生系统错误"
+      return
+    GameService.$one "xiamai", (status)->
+      if status != 0
+        if callback then callback false, status, "发生未知错误(#{status})"
+        return
+      if callback then callback true, 0, ""
+
+  serviceObj.isShangzuo = ()->
+    return GameService.gameServer.isShangzuo()
+  serviceObj.isShangmai = ()->
+    return GameService.gameServer.isShangmai()
 
   return serviceObj
 ]

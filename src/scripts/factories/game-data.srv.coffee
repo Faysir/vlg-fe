@@ -5,10 +5,14 @@ angular.module('vlg')
   dataVendor =
     putongRooms: []
     jiazuRooms:  []
-    roomPlayers:  # current room
-      shangzuo:  []
+    roomPlayers:  # current room only
       shangmai:  []
+      shangzuo:  []
       guanzhong: []
+    roomInfo:
+      type: null
+      id: null
+    currentSpeakerId: -1
 
 
   GameService.$on 'roomputong_playernum', (player_nums)->
@@ -21,7 +25,7 @@ angular.module('vlg')
         type: "putong"
         id: i
       }
-    $rootScope.$broadcast('$onPutongRoomLoaded')
+    $rootScope.$broadcast '$onPutongRoomLoaded'
 
   GameService.$on 'roomjiazu_playernum', (player_nums)->
     dataVendor.jiazuRooms.splice(0)
@@ -33,12 +37,26 @@ angular.module('vlg')
         type: "jiazu"
         id: i
       }
-    $rootScope.$broadcast('$onJiazuRoomLoaded')
+    $rootScope.$broadcast '$onJiazuRoomLoaded'
 
   GameService.$on 'roomplayer', (players, status) ->
     playerTypes = Object.keys(dataVendor.roomPlayers)
     for playerType, i in playerTypes
-      return
+      dataVendor.roomPlayers[playerType].splice 0
+      for playerName, j in players[i]
+        playerStatus = status[i][j]
+        dataVendor.roomPlayers[playerType].push
+          name: playerName
+          status: playerStatus
+          imageUrl: "vendor/images/login/bg.png"
+    $rootScope.$broadcast '$onRoomPlayersLoaded'
+
+  GameService.$on 'speaker', (speaker_player_id) ->
+    speaker_player_id = parseInt(speaker_player_id)
+    if isNaN(speaker_player_id)
+      speaker_player_id = -1
+    dataVendor.currentSpeakerId = speaker_player_id
+    $rootScope.$broadcast '$onRoomPlayersLoaded'
 
   return dataVendor
 ]

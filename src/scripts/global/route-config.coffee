@@ -36,7 +36,8 @@ angular.module('vlg')
     templateUrl: "pages/profile/inventory.html"
   })
   .state('room', _makeState {
-    url: '/room/:roomType/:roomId',
+#    url: '/room/:roomType/:roomId',
+    url: '/room',
     templateUrl: "pages/room/room.html"
   })
 

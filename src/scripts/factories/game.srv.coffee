@@ -14,6 +14,12 @@ angular.module('vlg')
     "open": []
     "close": []
     "error": []
+    "shangzuo": []
+    "xiazuo": []
+    "shangmai": []
+    "xiamai": []
+    "gamestart": []
+    "speakover": []
 
   _validateEventExpression = (eventExpr)->
     if (typeof eventExpr != "string") or (eventExpr.length == 0)
@@ -66,8 +72,8 @@ angular.module('vlg')
     _callEvent("roomplayer", players, status)
     return
 
-  on_speaker = (speaker)->
-    _callEvent("speaker", speaker)
+  on_speaker = (speaker_player_id)->
+    _callEvent("speaker", speaker_player_id)
     return
 
   on_open = (evt)->
@@ -82,6 +88,31 @@ angular.module('vlg')
     _callEvent("error", evt)
     return
 
+  on_shangzuo = (status)->
+    _callEvent("shangzuo", status)
+    return
+
+  on_xiazuo = (status)->
+    _callEvent("xiazuo", status)
+    return
+
+  on_shangmai = (status)->
+    _callEvent("shangmai", status)
+    return
+
+  on_xiamai = (status)->
+    _callEvent("xiamai", status)
+    return
+
+  on_gamestart = ()->
+    _callEvent("gamestart")
+    return
+
+  on_speakover = ()->
+    _callEvent("speakover")
+    return
+
+
   game_server_callback = {}
   game_server_callback.onlogin = on_login
   game_server_callback.onputong = on_roomputong_playernum
@@ -92,6 +123,12 @@ angular.module('vlg')
   game_server_callback.onopen = on_open
   game_server_callback.onclose = on_close
   game_server_callback.onerror = on_error
+  game_server_callback.onshangzuo = on_shangzuo
+  game_server_callback.onxiazuo = on_xiazuo
+  game_server_callback.onshangmai = on_shangmai
+  game_server_callback.onxiamai = on_xiamai
+  game_server_callback.ongamestart = on_gamestart
+  game_server_callback.onspeakover = on_speakover
 
   gameServer = new GameServer(game_server_callback);
 

@@ -23,6 +23,7 @@
       height: ($player-item-height + $player-item-gap-ver) * $player-rows;
       .player-item {
         display: inline-block;
+        position: relative;
         vertical-align: top;
         width: $player-item-width;
         height: $player-item-height;
@@ -30,6 +31,12 @@
         margin-bottom: $player-item-gap-ver;
         background-size: 100% 100%;
         background-image: url("../images/room/player-chair-card.png");
+        & > img {
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
       }
     }
     .player-view {

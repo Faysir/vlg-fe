@@ -7,7 +7,7 @@
     .center-box
         .center-panel
             .room-list
-                a.room-item(href="#/room/{{room.type}}/{{room.id}}", ng-repeat="room in content.currentRoomList")
+                a.room-item(href="javascript:;", ng-repeat="room in content.currentRoomList", ng-click="enterRoom(room)")
                     .room-name {{ room.name }} \#{{ room.id }}
                     .room-status 空房间
                     .room-member-count {{ room.playerCount }}/{{ room.maxPlayerCount }}

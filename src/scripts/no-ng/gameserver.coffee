@@ -96,6 +96,12 @@ window.GameServer = (gamecallback) ->
   on_open = gamecallback.onopen
   on_close = gamecallback.onclose
   on_error = gamecallback.onerror
+  on_shangzuo = gamecallback.onshangzuo
+  on_xiazuo = gamecallback.onxiazuo
+  on_shangmai = gamecallback.onshangmai
+  on_xiamai = gamecallback.onxiamai
+  on_gamestart = gamecallback.ongamestart
+  on_speakover = gamecallback.onspeakover
 
   sendaudio = (blob)->
     ws.send(blob)
@@ -112,10 +118,10 @@ window.GameServer = (gamecallback) ->
     on_close(evt)
     return
 
+  audio = new Audio();
   wsmessage = (evt)->
     if typeof(evt.data) != "string"
       bb = evt.data
-      audio = new Audio();
       audio.src = window.URL.createObjectURL(bb)
       audio.play()
       return
@@ -157,6 +163,7 @@ window.GameServer = (gamecallback) ->
           players = new Array()
           playerstatus = new Array()
           for k in ss
+            if k.length == 0 then continue
             t = k.split(",")
             players.push(t[0])
             playerstatus.push(t[1])
@@ -170,6 +177,7 @@ window.GameServer = (gamecallback) ->
             stat = 4
           else if stat == 3
             stat = 5
+        on_shangzuo(r)
       when "xiazuo"
         r = Number(mess[1])
         if(r == 0)
@@ -177,6 +185,7 @@ window.GameServer = (gamecallback) ->
             stat = 2
           else if stat == 5
             stat = 3
+        on_xiazuo(r)
       when "shangmai"
         r = Number(mess[1])
         if r == 0
@@ -184,6 +193,7 @@ window.GameServer = (gamecallback) ->
             stat = 3
           else if stat == 4
             stat = 5
+        on_shangmai(r)
       when "xiamai"
         r = Number(mess[1])
         if r == 0
@@ -191,6 +201,7 @@ window.GameServer = (gamecallback) ->
             stat = 2
           else if stat == 5
             stat = 4
+        on_xiamai(r)
       when "speakover"
         if stat == 3
           stat = 2
@@ -198,6 +209,7 @@ window.GameServer = (gamecallback) ->
           stat =4
         else if stat == 7
           stat =6
+        on_speakover()
       when "speaker"
         r = mess[1]
         if r == '#'
@@ -211,6 +223,7 @@ window.GameServer = (gamecallback) ->
       when "gamestart"
         if (stat == 4 || stat == 5)
           stat = 6
+        on_gamestart()
       else
         break
 
@@ -233,6 +246,11 @@ window.GameServer = (gamecallback) ->
 
   this.isLoggedIn = ()->
     return is_connected and (stat != 0)
+
+  this.isShangzuo = ()->
+    return ((stat == 4) || (stat == 5) || (stat == 6) || (stat == 7) || (stat == 8))
+  this.isShangmai = ()->
+    return ((stat == 3) || (stat == 5) || (stat == 7))
 
   return
 

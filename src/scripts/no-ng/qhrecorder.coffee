@@ -37,8 +37,8 @@ window.Qrecorder = (process) ->
       for item_buffer in this.buffer
         data.set(item_buffer, offset)
         offset += item_buffer.length
-      console.log(this.buffer.length);
-      console.log(this.size);
+      # console.log(this.buffer.length);
+      # console.log(this.size);
       # var length = data.length
       return data;
       # 压缩
@@ -147,14 +147,21 @@ window.Qrecorder = (process) ->
       process(w)
       recorder.clear()
 
+  _check_and_start_timer = 0
   start = () ->
     return if started
-    started = true
-    recorder.record()
-    newSource # = audio_context.createBufferSource();
-    newBuffer
-    has = 0
-    timer = setInterval(rec, 1000)
+    _check_and_start = () ->
+      if _check_and_start_timer > 0 then clearTimeout _check_and_start_timer
+      if recorder
+        started = true
+        recorder.record()
+        newSource = undefined # = audio_context.createBufferSource();
+        newBuffer = undefined
+        has = 0
+        timer = setInterval(rec, 1000)
+      else
+        _check_and_start_timer = setTimeout _check_and_start, 100
+    _check_and_start()
 
   stop = () ->
     return unless started
@@ -166,7 +173,7 @@ window.Qrecorder = (process) ->
     try
       audio_context = new AudioContext()
     catch e
-      console.log(e)
+      console.error(e)
     input = audio_context.createMediaStreamSource(stream)
     # input.connect(audio_context.destination)
     workerPath = document.location.pathname.replace(/[^\.]+\.[^\.]+$/, '')
@@ -179,6 +186,6 @@ window.Qrecorder = (process) ->
   mediaerror = () ->
     return
 
-  navigator.getUserMedia({audio:true},startmedia,mediaerror)
+  navigator.getUserMedia({audio:true}, startmedia, mediaerror)
 
 # `function Qrecorder() { _Qrecorder.apply(undefined, arguments); }`

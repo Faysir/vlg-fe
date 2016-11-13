@@ -12,7 +12,8 @@ angular.module('vlg')
     roomInfo:
       type: null
       id: null
-    currentSpeakerId: -1
+    currentSpeaker: null
+    loginName: null
 
 
   GameService.$on 'roomputong_playernum', (player_nums)->
@@ -25,7 +26,7 @@ angular.module('vlg')
         type: "putong"
         id: i
       }
-    $rootScope.$broadcast '$onPutongRoomLoaded'
+    $rootScope.$broadcast '$putongRoomLoaded'
 
   GameService.$on 'roomjiazu_playernum', (player_nums)->
     dataVendor.jiazuRooms.splice(0)
@@ -37,7 +38,7 @@ angular.module('vlg')
         type: "jiazu"
         id: i
       }
-    $rootScope.$broadcast '$onJiazuRoomLoaded'
+    $rootScope.$broadcast '$jiazuRoomLoaded'
 
   GameService.$on 'roomplayer', (players, status) ->
     playerTypes = Object.keys(dataVendor.roomPlayers)
@@ -47,16 +48,27 @@ angular.module('vlg')
         playerStatus = status[i][j]
         dataVendor.roomPlayers[playerType].push
           name: playerName
-          status: playerStatus
+          status: parseInt(playerStatus)
           imageUrl: "vendor/images/login/bg.png"
-    $rootScope.$broadcast '$onRoomPlayersLoaded'
+    $rootScope.$broadcast '$roomPlayersLoaded'
 
-  GameService.$on 'speaker', (speaker_player_id) ->
-    speaker_player_id = parseInt(speaker_player_id)
-    if isNaN(speaker_player_id)
-      speaker_player_id = -1
-    dataVendor.currentSpeakerId = speaker_player_id
-    $rootScope.$broadcast '$onRoomPlayersLoaded'
+  GameService.$on 'speaker', (speaker_player_name) ->
+    if speaker_player_name == "#"
+      speaker_player_name = null
+      dataVendor.currentSpeaker = null
+      $rootScope.$broadcast '$speakerChanged'
+      return
+    speakerPlayer = null
+    for player in [].concat(dataVendor.roomPlayers.shangmai, dataVendor.roomPlayers.shangzuo, dataVendor.roomPlayers.guanzhong)
+      if player.name == speaker_player_name
+        speakerPlayer = player
+        break
+    if not speakerPlayer
+      console.warn "[GameDataService] [on $speakerChanged] cannot find the corresponding player"
+      return
+    dataVendor.currentSpeaker = speakerPlayer
+    $rootScope.$broadcast '$speakerChanged'
+    return
 
   return dataVendor
 ]

@@ -1,10 +1,11 @@
 angular.module('vlg')
 
-.factory 'GamePlayService', ['GameService', 'GameDataService', (GameService, GameDataService)->
+.factory 'GamePlayService', ['GameService', 'GameDataService', 'GameAudioService', (GameService, GameDataService, GameAudioService)->
 
   serviceObj = {}
 
   serviceObj.data = GameDataService
+  serviceObj.audio = GameAudioService
 
   serviceObj.connect = ()->
     return GameService.connect()
@@ -22,6 +23,7 @@ angular.module('vlg')
       else
         GameService.$one 'login', (status) ->
           if status == 0
+            GameDataService.loginName = username
             if callback then callback true, 0, ""
           else if status == 3 # user already online
             if callback then callback true, 3, ""
@@ -60,6 +62,7 @@ angular.module('vlg')
     GameDataService.roomPlayers.shangzuo.splice 0
     GameDataService.roomPlayers.shangmai.splice 0
     GameDataService.roomPlayers.guanzhong.splice 0
+    GameDataService.currentSpeaker = null
     if callback then callback true, 0, ""
 
   serviceObj.getCurrentRoomShangzuoPlayers = () ->
@@ -110,6 +113,11 @@ angular.module('vlg')
     return GameService.gameServer.isShangzuo()
   serviceObj.isShangmai = ()->
     return GameService.gameServer.isShangmai()
+
+  serviceObj.startRecord = () ->
+    GameService.gameServer.startrec()
+  serviceObj.stopRecord = () ->
+    GameService.gameServer.stoprec()
 
   return serviceObj
 ]

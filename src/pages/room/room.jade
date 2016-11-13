@@ -17,18 +17,17 @@
     .left-message-area
         .left-message-box
             .title-box 公共频道
-            .content-box
-                .content
+            .content-box.room-content-box(massages="content.messageList.chatting")
         input.left-message-input(type="text")
         a.left-message-send-button(href="javascript:;") 发送
         .left-message-side-box
             .content-box
-                .content
         a.left-message-up-button(href="javascript:;")
         a.left-message-down-button(href="javascript:;")
     .video-area
         .mirror
             .mirror-content
+                img(ng-src="{{content.currentSpeaker.imageUrl}}", ng-if="content.currentSpeaker")
             .mirror-frame
         a.button-close-video(href="javascript:;")
         .adjust-box
@@ -54,8 +53,7 @@
     .judge-area
         .right-message-box
             .title-box 游戏进程
-            .content-box
-                .content
+            .content-box.room-content-box(massages="content.messageList.progress")
         input.right-message-input(type="text")
         a.right-message-send-button(href="javascript:;") 发送
         a.right-message-channel-button(href="javascript:;") 裁判频道

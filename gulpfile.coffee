@@ -36,12 +36,20 @@ gulp.task('vendor:image', ->
   .pipe(gulp.dest('www/vendor/images/'))
 )
 
+gulp.task('vendor:audio', ->
+  gulp.src([
+    'src/audios/**/*.ogg'
+  ])
+  .pipe(gulp.dest('www/vendor/audios/'))
+)
+
 gulp.task('vendor:src_js', ->
   gulp.src(['src/scripts/javascripts/**/*.js'])
   .pipe(gulp.dest('www/vendor/scripts/'))
 )
 
-gulp.task('vendor', ['vendor:css', 'vendor:js', 'vendor:image', 'vendor:src_js'])
+gulp.task('vendor:source', ['vendor:image', 'vendor:audio', 'vendor:src_js'])
+gulp.task('vendor', ['vendor:css', 'vendor:js', 'vendor:source'])
 
 gulp.task('scss', ->
   gulp.src(['src/stylesheets/style.scss'])
@@ -82,6 +90,6 @@ gulp.task('watch:scss', ['scss'], ->
 
 gulp.task('watch', ['vendor', 'watch:coffee', 'watch:jade', 'watch:scss'])
 gulp.task('deploy', ['vendor', 'coffee', 'scss', 'jade'])
-gulp.task('deploy_src', ['vendor:image', 'vendor:src_js', 'coffee', 'scss', 'jade'])
+gulp.task('deploy_src', ['vendor:source', 'coffee', 'scss', 'jade'])
 
 gulp.task('default', ['watch'])

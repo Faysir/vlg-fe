@@ -1,5 +1,5 @@
 window.GameServer = (gamecallback) ->
-  this.wsurl = "ws://localhost:8080/vlgsocket/game"
+  this.wsurl = "ws://#{window.location.hostname}:8080/vlgsocket/game"
   that = this
   stat = 0
   user = null
@@ -118,11 +118,13 @@ window.GameServer = (gamecallback) ->
     on_close(evt)
     return
 
-  audio = new Audio();
   wsmessage = (evt)->
     if typeof(evt.data) != "string"
       bb = evt.data
+      audio = new Audio()
       audio.src = window.URL.createObjectURL(bb)
+      console.log "evt.data", bb
+      console.log "audio.src: ", audio.src
       audio.play()
       return
     mess = evt.data.split(" ");
@@ -251,6 +253,11 @@ window.GameServer = (gamecallback) ->
     return ((stat == 4) || (stat == 5) || (stat == 6) || (stat == 7) || (stat == 8))
   this.isShangmai = ()->
     return ((stat == 3) || (stat == 5) || (stat == 7))
+
+  this.startrec = () ->
+    rec.startrec()
+  this.stoprec = () ->
+    rec.stoprec()
 
   return
 

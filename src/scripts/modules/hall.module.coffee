@@ -33,10 +33,10 @@ angular.module('vlg')
   $scope.prevPage = () ->
     _loadPage(_currentPage - 1)
 
-  $scope.$on '$onPutongRoomLoaded', ()->
+  $scope.$on '$putongRoomLoaded', ()->
     if $scope.content.currentRoomFilter == $scope.ROOM_PUTONG
       _loadPage(_currentPage)
-  $scope.$on '$onJiazuRoomLoaded', ()->
+  $scope.$on '$jiazuRoomLoaded', ()->
     if $scope.content.currentRoomFilter == $scope.ROOM_JIAZU
       _loadPage(_currentPage)
   _loadPage(_currentPage)

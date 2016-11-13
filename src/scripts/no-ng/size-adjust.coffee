@@ -44,13 +44,20 @@ $(window).resize(->
 
   marginVer = (windowHeight - defaultHeight * resizeRate ) / 2
   marginHor = (windowWidth - defaultWidth * resizeRate ) / 2
+#  $('.container').css({
+#    'transform': 'scale(' + resizeRate + ')'
+#    'transform-origin': '0 0'
+#    'margin-top': marginVer + 'px'
+#    'margin-bottom': marginVer + 'px'
+#    'margin-left': marginHor + 'px'
+#    'margin-right': marginHor + 'px'
+#  })
   $('.container').css({
+    'position': "absolute"
     'transform': 'scale(' + resizeRate + ')'
     'transform-origin': '0 0'
-    'margin-top': marginVer + 'px'
-    'margin-bottom': marginVer + 'px'
-    'margin-left': marginHor + 'px'
-    'margin-right': marginHor + 'px'
+    'top': marginVer + 'px'
+    'left': marginHor + 'px'
   })
 
   window.resizeRate = resizeRate

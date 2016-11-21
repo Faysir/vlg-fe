@@ -1,6 +1,6 @@
 angular.module('vlg')
 
-.factory 'GameDataService', ['GameService', '$rootScope', (GameService, $rootScope)->
+.factory('GameDataService', ['GameService', '$rootScope', (GameService, $rootScope)->
 
   dataVendor =
     putongRooms: []
@@ -13,8 +13,10 @@ angular.module('vlg')
       type: null
       id: null
     currentSpeaker: null
+    currentSpeakTimeLimit: null
     loginName: null
-
+    diedList: []
+    gameInfo: null
 
   GameService.$on 'roomputong_playernum', (player_nums)->
     dataVendor.putongRooms.splice(0)
@@ -52,7 +54,7 @@ angular.module('vlg')
           imageUrl: "vendor/images/login/bg.png"
     $rootScope.$broadcast '$roomPlayersLoaded'
 
-  GameService.$on 'speaker', (speaker_player_name) ->
+  GameService.$on 'speaker', (speaker_player_name, speak_time_limit) ->
     if speaker_player_name == "#"
       speaker_player_name = null
       dataVendor.currentSpeaker = null
@@ -67,8 +69,45 @@ angular.module('vlg')
       console.warn "[GameDataService] [on $speakerChanged] cannot find the corresponding player"
       return
     dataVendor.currentSpeaker = speakerPlayer
+    dataVendor.currentSpeakTimeLimit = speak_time_limit
     $rootScope.$broadcast '$speakerChanged'
     return
 
+  GameService.$on 'gamestart', () ->
+    if GameService.gameServer.inGame()
+      dataVendor.gameInfo = GameService.gameServer.gameInfo()
+      dataVendor.diedList.splice(0)
+    $rootScope.$broadcast '$gameStarted'
+    return
+
+  GameService.$on 'gameover', (result, score) ->
+    dataVendor.gameInfo = null
+    $rootScope.$broadcast '$gameOver', result, score
+    return
+
+  GameService.$on 'daylight', (killed_number) ->
+    if killed_number
+      dataVendor.diedList.push(killed_number)
+    $rootScope.$broadcast '$daylight', killed_number
+
+  GameService.$on 'voted', (kicked_number) ->
+    if kicked_number
+      dataVendor.diedList.push(kicked_number)
+    $rootScope.$broadcast '$voteOver', kicked_number
+
+  GameService.$on 'checked', (number, role) ->
+    $rootScope.$broadcast 'checked', number, role
+
   return dataVendor
-]
+])
+
+.factory('GameConstant', [() ->
+  constants =
+    ROLE_COP: window.GameServer.ROLE_COP
+    ROLE_KILLER: window.GameServer.ROLE_KILLER
+    ROLE_VILLAGER: window.GameServer.ROLE_VILLAGER
+    RESULT_KILLERS_DIED: window.GameServer.RESULT_KILLERS_DIED
+    RESULT_COPS_DIED: window.GameServer.RESULT_COPS_DIED
+    RESULT_VILLAGERS_DIED: window.GameServer.RESULT_VILLAGERS_DIED
+  return constants
+])

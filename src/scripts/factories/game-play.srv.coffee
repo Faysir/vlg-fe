@@ -114,6 +114,26 @@ angular.module('vlg')
   serviceObj.isShangmai = ()->
     return GameService.gameServer.isShangmai()
 
+  # ========================================================================================
+  # in game functions
+  serviceObj.isDead = (number) ->
+    if not number then return GameService.gameServer.isDead()
+    for n in died_list
+      if n == number then return true
+    return false
+  serviceObj.kill = (number) ->
+    return (0 == GameService.gameServer.kill(number))
+  serviceObj.check = (number) ->
+    return (0 == GameService.gameServer.check(number))
+  serviceObj.vote = (number) ->
+    return (0 == GameService.gameServer.vote(number))
+  serviceObj.baofei = () ->
+    return (0 == GameService.gameServer.baofei())
+  serviceObj.endSpeak = () ->
+    return (0 == GameService.gameServer.end_speak())
+
+  # ========================================================================================
+
   serviceObj.startRecord = () ->
     GameService.gameServer.startrec()
   serviceObj.stopRecord = () ->

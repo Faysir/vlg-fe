@@ -20,6 +20,17 @@ angular.module('vlg')
     "xiamai": []
     "gamestart": []
     "speakover": []
+    "gameover": []
+    "baofei": []
+    "daylight": []
+    "checked": []
+    "voted": []
+    "startvote": []
+    "startvoteinsidepk": []
+    "startvoteoutsidepk": []
+    "kill": []
+    "check": []
+    "night": []
 
   _validateEventExpression = (eventExpr)->
     if (typeof eventExpr != "string") or (eventExpr.length == 0)
@@ -72,8 +83,8 @@ angular.module('vlg')
     _callEvent("roomplayer", players, status)
     return
 
-  on_speaker = (speaker_player_id)->
-    _callEvent("speaker", speaker_player_id)
+  on_speaker = (speaker_player_name, time_limit)->
+    _callEvent("speaker", speaker_player_name, time_limit)
     return
 
   on_open = (evt)->
@@ -112,6 +123,51 @@ angular.module('vlg')
     _callEvent("speakover")
     return
 
+  on_gameover = (result, score) ->
+    _callEvent("gameover", result, score)
+    return
+
+  on_baofei = (number) ->
+    _callEvent("baofei", number)
+    return
+
+  on_daylight = (killed_number) ->
+    _callEvent("daylight", killed_number)
+    return
+
+  on_checked = (number, role) ->
+    _callEvent("checked", number, role)
+    return
+
+  on_voted = (number, equals) ->
+    _callEvent("voted", number, equals)
+    return
+
+  on_startvote = () ->
+    _callEvent("startvote")
+    return
+
+  on_startvoteinsidepk = (vote_list) ->
+    _callEvent("startvoteinsidepk", vote_list)
+    return
+
+  on_startvoteoutsidepk = (vote_list) ->
+    _callEvent("startvoteoutsidepk", vote_list)
+    return
+
+  on_kill = () ->
+    _callEvent("kill")
+    return
+
+  on_check = () ->
+    _callEvent("check")
+    return
+
+  on_night = () ->
+    _callEvent("night")
+    return
+
+
 
   game_server_callback = {}
   game_server_callback.onlogin = on_login
@@ -129,6 +185,17 @@ angular.module('vlg')
   game_server_callback.onxiamai = on_xiamai
   game_server_callback.ongamestart = on_gamestart
   game_server_callback.onspeakover = on_speakover
+  game_server_callback.ongameover = on_gameover
+  game_server_callback.onbaofei = on_baofei
+  game_server_callback.ondaylight = on_daylight
+  game_server_callback.onchecked = on_checked
+  game_server_callback.onvoted = on_voted
+  game_server_callback.onstartvote = on_startvote
+  game_server_callback.onstartvoteinsidepk = on_startvoteinsidepk
+  game_server_callback.onstartvoteoutsidepk = on_startvoteoutsidepk
+  game_server_callback.onkill = on_kill
+  game_server_callback.oncheck = on_check
+  game_server_callback.onnight = on_night
 
   gameServer = new GameServer(game_server_callback);
 

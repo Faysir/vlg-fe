@@ -8,6 +8,8 @@ window.GameServer = (gamecallback) ->
   isspeaking = false
   putongplayernum = null
   jiazuplayernum = null
+  game_role = null
+  game_number = null
   # 0--not log in
   # 1--loged and in hall
   # 2--entered room , xiazuo , not mai
@@ -101,7 +103,18 @@ window.GameServer = (gamecallback) ->
   on_shangmai = gamecallback.onshangmai
   on_xiamai = gamecallback.onxiamai
   on_gamestart = gamecallback.ongamestart
+  on_gameover = gamecallback.ongameover
   on_speakover = gamecallback.onspeakover
+  on_baofei = gamecallback.onbaofei
+  on_killed = gamecallback.ondaylight # informed when night ends, if someone is killed, the number will be passed
+  on_checked = gamecallback.onchecked # cops are informed when someone is checked
+  on_voted = gamecallback.onvoted
+  on_startvote = gamecallback.onstartvote
+  on_startvoteinsidepk = gamecallback.onstartvoteinsidepk
+  on_startvoteoutsidepk = gamecallback.onstartvoteoutsidepk
+  on_sha = gamecallback.onkill # a signal for killers to kill
+  on_yan = gamecallback.oncheck # a signal for cops to check
+  on_shayan = gamecallback.onnight # a signal for villagers that night is comming
 
   sendaudio = (blob)->
     ws.send(blob)
@@ -214,6 +227,7 @@ window.GameServer = (gamecallback) ->
         on_speakover()
       when "speaker"
         r = mess[1]
+        t = Number mess[2]
         if r == '#'
           if stat == 3
             stat = 2
@@ -221,11 +235,67 @@ window.GameServer = (gamecallback) ->
             stat = 4
           else if stat == 7
             stat = 6
-        on_speaker(mess[1])
+        on_speaker(r, t)
       when "gamestart"
+        player_list = mess[1].split "_"
+        game_role = Number(mess[2])
+        game_number = Number(mess[3])
+        died_list = []
         if (stat == 4 || stat == 5)
           stat = 6
         on_gamestart()
+      when "gameover"
+        x = Number mess[1]
+        s = Number mess[2]
+        game_role = null
+        game_number = null
+        died_list = []
+        if (stat == 6 || stat == 7 || stat == 8)
+          stat = 4
+        on_gameover x, s
+      when "sha"
+        on_sha()
+      when "yan"
+        on_yan()
+      when "shayan"
+        on_shayan()
+      when "someonebaofei"
+        x = Number mess[1]
+        if (x == game_number) && (stat == 6 || stat == 7)
+          stat = 8
+        on_baofei x
+      when "killed"
+        x = Number mess[1]
+        if x > 0
+          died_list.push x
+          if (x == game_number) && (stat == 6 || stat == 7)
+            stat = 8
+          on_killed x
+        else
+          on_killed null
+      when "voted"
+        x = Number mess[1]
+        died_list.push x
+        if (x == game_number) && (stat == 6 || stat == 7)
+          stat = 8
+        equal_list = undefined
+        # if x is 0 then equal_list = (num for num in mess[2].split('_'))
+        if x is 0 then equal_list = [1]
+        on_voted x, equal_list
+      when "checked"
+        x = Number mess[1]
+        r = Number mess[2]
+        on_checked x, r
+      when "startvote"
+        on_startvote()
+      when "startvoteinsidepk"
+        xx = mess[1]
+        xx = JSON.parse(xx)
+        on_startvoteinsidepk(xx)
+      when "startvoteoutsidepk"
+        xx = mess[1]
+        xx = JSON.parse(xx)
+        on_startvoteoutsidepk(xx)
       else
         break
 
@@ -254,6 +324,41 @@ window.GameServer = (gamecallback) ->
   this.isShangmai = ()->
     return ((stat == 3) || (stat == 5) || (stat == 7))
 
+  this.myRole = () ->
+    return game_role
+  this.myNumber = () ->
+    return game_number
+  this.inGame = () ->
+    return (stat == 6 || stat == 7 || stat == 8)
+  this.gameInfo = ()->
+    info =
+      role: game_role
+      number: game_number
+    return info
+  this.isDead = () ->
+    return (stat == 8)
+
+  this.kill = (number) ->
+    if not (game_role == window.GameServer.ROLE_KILLER) then return 2
+    if this.isDead() then return 1
+    ws.send("sha #{number}")
+    return 0
+  this.check = (number) ->
+    if not (game_role == window.GameServer.ROLE_COP) then return 2
+    if this.isDead() then return 1
+    ws.send("yan #{number}")
+    return 0
+  this.vote = (number) ->
+    if this.isDead() then return 1
+    ws.send("vote #{number}")
+    return 0
+  this.baofei = () ->
+    ws.send("baofei")
+    return 0
+  this.end_speak = () ->
+    ws.send("speakend")
+    return 0
+
   this.startrec = () ->
     rec.startrec()
   this.stoprec = () ->
@@ -262,3 +367,11 @@ window.GameServer = (gamecallback) ->
   return
 
 # `function GameServer() { _GameServer.apply(undefined, arguments); }`
+
+window.GameServer.ROLE_COP = 0
+window.GameServer.ROLE_KILLER = 1
+window.GameServer.ROLE_VILLAGER = 2
+
+window.GameServer.RESULT_KILLERS_DIED = 1
+window.GameServer.RESULT_COPS_DIED = 2
+window.GameServer.RESULT_VILLAGERS_DIED = 3

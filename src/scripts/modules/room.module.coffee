@@ -113,7 +113,7 @@ angular.module('vlg')
     if $scope.content.currentSpeaker
       _onSpeakerEnd()
       $scope.content.currentSpeakerName = $scope.content.currentSpeaker.name
-      $scope.content.leftSpeakTime = SPEAK_TIME_LIMIT
+      $scope.content.leftSpeakTime = game.data.currentSpeakTimeLimit
       $scope.content.leftSpeakTimeString = "#{$scope.content.leftSpeakTime}"
       speakTimer = setInterval (()->
         $scope.content.leftSpeakTime -= 1

@@ -1,5 +1,6 @@
 window.GameServer = (gamecallback) ->
-  this.wsurl = "ws://#{window.location.hostname}:8080/vlgsocket/game"
+  # this.wsurl = "ws://#{window.location.hostname}:8080/vlgsocket/game"
+  this.wsurl = "ws://localhost:8080/vlgsocket/game"
   that = this
   stat = 0
   user = null
@@ -10,6 +11,8 @@ window.GameServer = (gamecallback) ->
   jiazuplayernum = null
   game_role = null
   game_number = null
+  game_specs = 0 # count of cops or killers
+  game_partners = []
   # 0--not log in
   # 1--loged and in hall
   # 2--entered room , xiazuo , not mai
@@ -112,9 +115,9 @@ window.GameServer = (gamecallback) ->
   on_startvote = gamecallback.onstartvote
   on_startvoteinsidepk = gamecallback.onstartvoteinsidepk
   on_startvoteoutsidepk = gamecallback.onstartvoteoutsidepk
-  on_sha = gamecallback.onkill # a signal for killers to kill
-  on_yan = gamecallback.oncheck # a signal for cops to check
-  on_shayan = gamecallback.onnight # a signal for villagers that night is comming
+  on_sha = gamecallback.onsha # a signal for killers to kill
+  on_yan = gamecallback.onyan # a signal for cops to check
+  on_shayan = gamecallback.onshayan # a signal for villagers that night is comming
 
   sendaudio = (blob)->
     ws.send(blob)
@@ -136,8 +139,8 @@ window.GameServer = (gamecallback) ->
       bb = evt.data
       audio = new Audio()
       audio.src = window.URL.createObjectURL(bb)
-      console.log "evt.data", bb
-      console.log "audio.src: ", audio.src
+      # console.log "evt.data", bb
+      # console.log "audio.src: ", audio.src
       audio.play()
       return
     mess = evt.data.split(" ");
@@ -237,10 +240,11 @@ window.GameServer = (gamecallback) ->
             stat = 6
         on_speaker(r, t)
       when "gamestart"
-        player_list = mess[1].split "_"
-        game_role = Number(mess[2])
-        game_number = Number(mess[3])
-        died_list = []
+        game_specs = Number mess[1]
+        player_list = mess[2].split "_"
+        game_role = Number(mess[3])
+        game_number = Number(mess[4])
+        game_partners = if (mess[5] and (mess[5].length > 0)) then (Number n for n in mess[5].split('_')) else []
         if (stat == 4 || stat == 5)
           stat = 6
         on_gamestart()
@@ -249,7 +253,6 @@ window.GameServer = (gamecallback) ->
         s = Number mess[2]
         game_role = null
         game_number = null
-        died_list = []
         if (stat == 6 || stat == 7 || stat == 8)
           stat = 4
         on_gameover x, s
@@ -267,7 +270,6 @@ window.GameServer = (gamecallback) ->
       when "killed"
         x = Number mess[1]
         if x > 0
-          died_list.push x
           if (x == game_number) && (stat == 6 || stat == 7)
             stat = 8
           on_killed x
@@ -275,26 +277,24 @@ window.GameServer = (gamecallback) ->
           on_killed null
       when "voted"
         x = Number mess[1]
-        died_list.push x
         if (x == game_number) && (stat == 6 || stat == 7)
           stat = 8
         equal_list = undefined
-        # if x is 0 then equal_list = (num for num in mess[2].split('_'))
-        if x is 0 then equal_list = [1]
+        if x is 0
+          equal_list = (num for num in mess[2].split('_'))
+          x = null
         on_voted x, equal_list
       when "checked"
-        x = Number mess[1]
+        x = Number mess[1] or null
         r = Number mess[2]
         on_checked x, r
       when "startvote"
         on_startvote()
       when "startvoteinsidepk"
-        xx = mess[1]
-        xx = JSON.parse(xx)
+        xx = (Number n for n in mess[1].split('_'))
         on_startvoteinsidepk(xx)
       when "startvoteoutsidepk"
-        xx = mess[1]
-        xx = JSON.parse(xx)
+        xx = (Number n for n in mess[1].split('_'))
         on_startvoteoutsidepk(xx)
       else
         break
@@ -334,6 +334,8 @@ window.GameServer = (gamecallback) ->
     info =
       role: game_role
       number: game_number
+      specs: game_specs
+      partners: game_partners
     return info
   this.isDead = () ->
     return (stat == 8)

@@ -1,6 +1,6 @@
 angular.module('vlg')
 
-.factory 'GamePlayService', ['GameService', 'GameDataService', 'GameAudioService', (GameService, GameDataService, GameAudioService)->
+.factory 'GamePlayService', ['GameService', 'GameDataService', 'GameAudioService', 'GameConstant', (GameService, GameDataService, GameAudioService, GameConstant)->
 
   serviceObj = {}
 
@@ -116,9 +116,11 @@ angular.module('vlg')
 
   # ========================================================================================
   # in game functions
+  serviceObj.inGame = () ->
+    return GameService.gameServer.inGame()
   serviceObj.isDead = (number) ->
     if not number then return GameService.gameServer.isDead()
-    for n in died_list
+    for n in GameDataService.diedList
       if n == number then return true
     return false
   serviceObj.kill = (number) ->
@@ -132,12 +134,31 @@ angular.module('vlg')
   serviceObj.endSpeak = () ->
     return (0 == GameService.gameServer.end_speak())
 
+  serviceObj.amKiller = () ->
+    return (GameDataService.gameInfo.role == GameConstant.ROLE_KILLER)
+  serviceObj.amCop = () ->
+    return (GameDataService.gameInfo.role == GameConstant.ROLE_COP)
+  serviceObj.amVillager = () ->
+    return (GameDataService.gameInfo.role == GameConstant.ROLE_VILLAGER)
+  serviceObj.amDead = () ->
+    return serviceObj.isDead()
+
+  serviceObj.inVoteList = (player_number) ->
+    if (not GameDataService.pkList) or (GameDataService.pkList.length == 0) then return true
+    for n in GameDataService.pkList
+      if player_number == n then return true
+    return false
+
   # ========================================================================================
 
   serviceObj.startRecord = () ->
     GameService.gameServer.startrec()
   serviceObj.stopRecord = () ->
     GameService.gameServer.stoprec()
+
+  # =========================================================================================
+
+  serviceObj.const = GameConstant
 
   return serviceObj
 ]

@@ -57,6 +57,16 @@ angular.module('vlg')
     while playerList.length < MAX_PLAYER_COUNT then playerList.push({invalid:true})
     $scope.content.players = playerList
 
+#  _updatePlayerStatus = () ->
+#    inGame =  game.inGame()
+#    for player, i in $scope.content.players
+#      if not player.invalid
+#        player.isDead = inGame and game.isDead(player.number)
+#        player.canVote = ((not player.isDead) and game.data.voteEnabled and game.inVoteList(player.number) and inGame)
+#        player.canKill = ((not player.isDead) and game.data.killEnabled and inGame)
+#        player.canCheck = ((not player.isDead) and game.data.checkEnabled and inGame)
+#        player.showHint = ((player.canVote or player.canKill or player.canCheck or player.isDead) and inGame)
+
   $scope.$on '$roomPlayersLoaded', ()->
     _updatePlayers()
     $scope.$apply()
@@ -124,6 +134,85 @@ angular.module('vlg')
       pushProgressPlain "玩家#{$scope.content.currentSpeakerName}正在发言"
     else
       _onSpeakerEnd()
+    $scope.$apply()
+    return
+
+  $scope.$on '$gameStarted', () ->
+#    _updatePlayerStatus()
+    roleString = "未知"
+    if game.amKiller() then roleString = "杀手"
+    if game.amCop() then roleString = "警察"
+    if game.amVillager() then roleString = "平民"
+    _pushProgressMessage("游戏开始，你的身份是#{roleString}")
+    $scope.$apply()
+    return
+
+  $scope.$on '$gameOver', (evt, result, score) ->
+#    _updatePlayerStatus()
+    resultString = switch result
+      when game.const.RESULT_COPS_DIED then "警察死光了"
+      when game.const.RESULT_KILLERS_DIED then "杀手死光了"
+      when game.const.RESULT_VILLAGERS_DIED then "平民死光了"
+    winLoseString = "游戏结束"
+    if score < 0 then winLoseString = "你输了"
+    if score > 0 then winLoseString = "你赢了"
+    _pushProgressMessage("#{resultString}，#{winLoseString}")
+    $scope.$apply()
+    return
+
+  $scope.$on '$night', () ->
+#    _updatePlayerStatus()
+    actionString = ""
+    if game.data.killEnabled then actionString = "，请杀人"
+    if game.data.checkEnabled then actionString = "，请验人"
+    _pushProgressMessage("天黑了#{actionString}")
+    $scope.$apply()
+    return
+
+  $scope.$on '$daylight', (evt, killed_number) ->
+#    _updatePlayerStatus()
+    announceString = "昨夜是平安夜"
+    if killed_number then announceString = "昨夜#{killed_number}号玩家被杀"
+    _pushProgressMessage("天亮了，#{announceString}")
+    $scope.$apply()
+    return
+
+  $scope.$on '$checked', (evt, number, role) ->
+    roleString = switch role
+      when game.const.ROLE_KILLER then "杀手"
+      when game.const.ROLE_COP then "警察"
+      when game.const.ROLE_VILLAGER then "平民"
+    _pushProgressMessage("验人结果：#{number}号玩家的身份是#{roleString}")
+    $scope.$apply()
+    return
+
+  $scope.$on '$voteStart', () ->
+#    _updatePlayerStatus()
+    _pushProgressMessage("现在开始投票")
+    $scope.$apply()
+    return
+  $scope.$on '$pkInsideStart', () ->
+#    _updatePlayerStatus()
+    _pushProgressMessage("现在开始第二轮投票")
+    $scope.$apply()
+    return
+  $scope.$on '$pkOutsideStart', () ->
+#    _updatePlayerStatus()
+    _pushProgressMessage("现在开始最后一轮投票")
+    $scope.$apply()
+    return
+  $scope.$on '$voteOver', (evt, kicked_number, equal_list) ->
+#    _updatePlayerStatus()
+    if kicked_number
+      _pushProgressMessage("投票结束，#{kicked_number}号玩家出局")
+    else
+      equalListString = (("#{num}号" for num in equal_list)).join "、"
+      if game.data.voteStage == 1
+        _pushProgressMessage("投票结束，#{equalListString}玩家平票，进行场内PK")
+      else if game.data.voteStage == 2
+        _pushProgressMessage("投票结束，#{equalListString}玩家平票，进行场外PK")
+      else
+        _pushProgressMessage("投票结束，#{equalListString}玩家平票，今天是平安日")
     $scope.$apply()
     return
 

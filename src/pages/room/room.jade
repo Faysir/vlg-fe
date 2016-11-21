@@ -6,6 +6,13 @@
         .players-list
             .player-item(ng-repeat="player in content.players")
                 img(ng-src="{{player.imageUrl}}", ng-if="!player.invalid")
+                .hint-mask(ng-if="player.showHint")
+                    .hint-content
+                        .hint-number {{ player.number }}
+                        .hint-operation(ng-if="player.canVote") 投票
+                        .hint-operation(ng-if="player.canKill") 杀
+                        .hint-operation(ng-if="player.canCheck") 验
+                        .hint-information(ng-if="player.isDead") 玩家已死亡
         .player-view
     .right-top-button-group
         a.button-chair-up(href="javascript:;", ng-click="doShangzuo()")

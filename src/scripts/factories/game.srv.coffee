@@ -157,10 +157,12 @@ angular.module('vlg')
 
   on_kill = () ->
     _callEvent("kill")
+    on_night()
     return
 
   on_check = () ->
     _callEvent("check")
+    on_night()
     return
 
   on_night = () ->
@@ -193,9 +195,9 @@ angular.module('vlg')
   game_server_callback.onstartvote = on_startvote
   game_server_callback.onstartvoteinsidepk = on_startvoteinsidepk
   game_server_callback.onstartvoteoutsidepk = on_startvoteoutsidepk
-  game_server_callback.onkill = on_kill
-  game_server_callback.oncheck = on_check
-  game_server_callback.onnight = on_night
+  game_server_callback.onsha = on_kill
+  game_server_callback.onyan = on_check
+  game_server_callback.onshayan = on_night
 
   gameServer = new GameServer(game_server_callback);
 

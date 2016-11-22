@@ -406,16 +406,38 @@
     }
   }
 
-  .button-player-tools {
+  .player-tools-box {
     display: block;
     position: absolute;
-    left: 1393px;
+    right: 490px;
     top: 861px;
-    width: 40px;
     height: 143px;
-    background-size: 100% 100%;
-    background-image: url("../images/room/button-player-tools.png");
-    @include default-anchor(transparent);
+    .button-player-tools {
+      float: left;
+      width: 40px;
+      height: 143px;
+      background-size: 100% 100%;
+      background-image: url("../images/room/button-player-tools.png");
+      @include default-anchor(transparent);
+    }
+    .player-tool-buttons-group {
+      display: block;
+      margin-left: 40px;
+      .player-tool-button {
+        @include default-anchor(dimgray);
+        display: block;
+        border-radius: 5px;
+        margin: 5px 0;
+        font-size: 28px;
+        text-align: center;
+        line-height: 40px;
+        height: 40px;
+        width: 140px;
+        background-color: deepskyblue;
+        &:hover { background-color: lightskyblue }
+        color: dimgray;
+      }
+    }
   }
 
   .judge-area {

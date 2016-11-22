@@ -21,10 +21,42 @@ angular.module('vlg')
     setTimeout callback, audioItem.player.duration
     return
 
-  serviceObj.onSpeak = (playerIdx) ->
+  # ==============================================
+
+  serviceObj.greetings = (callback) ->
+    serviceObj.playAudio "greetings", callback
+    return
+
+  serviceObj.mvp = (callback) ->
+    serviceObj.playAudio "mvp", callback
+    return
+
+  serviceObj.greetings = (callback) ->
+    serviceObj.playAudio "greetings", callback
+    return
+
+  serviceObj.onSpeak = (playerIdx, callback) ->
     playerIdx = parseInt playerIdx
     if isNaN(playerIdx) then return
-    serviceObj.playAudio "speak-#{playerIdx+1}"
+    serviceObj.playAudio "speak-#{playerIdx+1}", callback
+    return
+
+  serviceObj.onBaofei = (playerIdx, callback) ->
+    playerIdx = parseInt playerIdx
+    if isNaN(playerIdx) then return
+    serviceObj.playAudio "baofei-#{playerIdx+1}", callback
+    return
+
+  serviceObj.onLastwords = (playerIdx, callback) ->
+    playerIdx = parseInt playerIdx
+    if isNaN(playerIdx) then return
+    serviceObj.playAudio "lastwords-#{playerIdx+1}", callback
+    return
+
+  serviceObj.onOut = (playerIdx, callback) ->
+    playerIdx = parseInt playerIdx
+    if isNaN(playerIdx) then return
+    serviceObj.playAudio "out-#{playerIdx+1}", callback
     return
 
   return serviceObj

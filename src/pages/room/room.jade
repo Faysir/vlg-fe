@@ -56,7 +56,11 @@
             br
             span 秒
             .time-number {{ content.leftSpeakTimeString }}
-    a.button-player-tools(href="javascript:;")
+    .player-tools-box
+        a.button-player-tools(href="javascript:;", ng-click="content.showPlayerTools = !content.showPlayerTools")
+        .player-tool-buttons-group(ng-show="content.showPlayerTools")
+            a.player-tool-button(href="javascript:;", ng-click="actionBaofei()") 爆 匪
+            a.player-tool-button(href="javascript:;", ng-click="actionEndSpeak()") 结束发言
     .judge-area
         .right-message-box
             .title-box 游戏进程

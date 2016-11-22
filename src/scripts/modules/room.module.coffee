@@ -12,6 +12,7 @@ angular.module('vlg')
 
   $scope.content =
     players: []
+    showPlayerTools: false
     currentSpeaker: null
     currentSpeakerNameOrNumber: null
     leftSpeakTime: 0
@@ -80,6 +81,7 @@ angular.module('vlg')
       if not success
         dialog.alert("无法退出房间，#{errorMessage}")
         return
+      $scope.content.showPlayerTools = false
       $state.go "hall"
 
   $scope.doShangzuo = ()->
@@ -244,8 +246,9 @@ angular.module('vlg')
         pushProgressPlain("你已经选择查验#{player.number}号玩家")
     return
   doBaofei = () ->
-    if game.baofei()
-      pushProgressPlain("你已选择爆匪")
+    if (not game.amDead()) and game.data.baofeiEnabled
+      if game.baofei()
+        pushProgressPlain("你已选择爆匪")
     return
 
   $scope.actionPlayer = (player) ->
@@ -255,6 +258,12 @@ angular.module('vlg')
     else if player.canCheck then doCheck(player)
     else if player.canKill then doKill(player)
     return
+
+  $scope.actionBaofei = () ->
+    doBaofei()
+
+  $scope.actionEndSpeak = () ->
+    game.endSpeak()
 
   return
 ])

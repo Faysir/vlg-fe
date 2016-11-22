@@ -124,15 +124,31 @@ angular.module('vlg')
       if n == number then return true
     return false
   serviceObj.kill = (number) ->
-    return (0 == GameService.gameServer.kill(number))
+    result = (0 == GameService.gameServer.kill(number))
+    if result
+      GameDataService.killEnabled = false
+      GameDataService.updatePlayerGameStatus()
+    return result
   serviceObj.check = (number) ->
-    return (0 == GameService.gameServer.check(number))
+    result = (0 == GameService.gameServer.check(number))
+    if result
+      GameDataService.checkEnabled = false
+      GameDataService.updatePlayerGameStatus()
+    return result
   serviceObj.vote = (number) ->
-    return (0 == GameService.gameServer.vote(number))
+    result = (0 == GameService.gameServer.vote(number))
+    if result
+      GameDataService.voteEnabled = false
+      GameDataService.updatePlayerGameStatus()
+    return result
   serviceObj.baofei = () ->
-    return (0 == GameService.gameServer.baofei())
+    result = (0 == GameService.gameServer.baofei())
+    if result
+      GameDataService.baofeiEnabled = false
+    return result
   serviceObj.endSpeak = () ->
-    return (0 == GameService.gameServer.end_speak())
+    result = (0 == GameService.gameServer.end_speak())
+    return result
 
   serviceObj.amKiller = () ->
     return (GameDataService.gameInfo.role == GameConstant.ROLE_KILLER)

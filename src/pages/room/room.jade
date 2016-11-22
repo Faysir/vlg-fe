@@ -4,7 +4,7 @@
 .pg.pg-main.pg-room(ng-controller="roomCtl")
     .players-frame
         .players-list
-            .player-item(ng-repeat="player in content.players")
+            .player-item(ng-repeat="player in content.players", ng-click="actionPlayer(player)")
                 img(ng-src="{{player.imageUrl}}", ng-if="!player.invalid")
                 .hint-mask(ng-if="player.showHint")
                     .hint-content

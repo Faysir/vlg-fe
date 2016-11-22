@@ -23,6 +23,7 @@ angular.module('vlg')
     checkEnabled: false
     voteEnabled: false
     roomInGame: false
+    baofeiEnabled: false
 
   _updatePlayerGameStatus = () ->
     for player, i in dataVendor.roomPlayers.shangzuo
@@ -58,6 +59,9 @@ angular.module('vlg')
         id: i
       }
     $rootScope.$broadcast '$jiazuRoomLoaded'
+
+  GameService.$on 'enterroom', () ->
+    dataVendor.roomInGame = false
 
   GameService.$on 'roomplayer', (players, status) ->
     playerTypes = Object.keys(dataVendor.roomPlayers)
@@ -102,8 +106,11 @@ angular.module('vlg')
   GameService.$on 'gamestart', () ->
     dataVendor.gameInfo = GameService.gameServer.gameInfo()
     dataVendor.diedList.splice(0)
-    dataVendor.killEnabled = (dataVendor.gameInfo.role == GameConstant.ROLE_KILLER)
-    dataVendor.checkEnabled = (dataVendor.gameInfo.role == GameConstant.ROLE_COP)
+    # dataVendor.killEnabled = (dataVendor.gameInfo.role == GameConstant.ROLE_KILLER)
+    # dataVendor.checkEnabled = (dataVendor.gameInfo.role == GameConstant.ROLE_COP)
+    dataVendor.killEnabled = false
+    dataVendor.checkEnabled = false
+    dataVendor.baofeiEnabled = false
     dataVendor.voteEnabled = false
     dataVendor.roomInGame = true
     for player, i in dataVendor.roomPlayers.shangzuo
@@ -131,6 +138,7 @@ angular.module('vlg')
   GameService.$on 'daylight', (killed_number) ->
     dataVendor.killEnabled = false
     dataVendor.checkEnabled = false
+    dataVendor.baofeiEnabled = false
     if killed_number
       dataVendor.diedList.push(killed_number)
     for player in dataVendor.roomPlayers.shangzuo
@@ -185,10 +193,10 @@ angular.module('vlg')
     if pk_list
       dataVendor.pkList.splice 0
       dataVendor.pkList.push num for num in pk_list
-    for num in pk_list
-      for player in dataVendor.roomPlayers.shangzuo
+    for player in dataVendor.roomPlayers.shangzuo
+      player.canVote = false
+      for num in pk_list
         if player.number == num then player.canVote = true
-        else player.canVote = false
     _updatePlayerGameStatus()
     $rootScope.$broadcast '$pkInsideStart'
   GameService.$on 'startvoteoutsidepk', (pk_list) ->
@@ -199,10 +207,10 @@ angular.module('vlg')
     if pk_list
       dataVendor.pkList.splice 0
       dataVendor.pkList.push num for num in pk_list
-    for num in pk_list
-      for player in dataVendor.roomPlayers.shangzuo
+    for player in dataVendor.roomPlayers.shangzuo
+      player.canVote = false
+      for num in pk_list
         if player.number == num then player.canVote = true
-        else player.canVote = false
     _updatePlayerGameStatus()
     $rootScope.$broadcast '$pkOutsideStart'
 
@@ -214,6 +222,7 @@ angular.module('vlg')
     $rootScope.$broadcast '$checkStart'
   GameService.$on 'kill', () ->
     dataVendor.killEnabled = true
+    dataVendor.baofeiEnabled = GameService.gameServer.isDead()
     for player in dataVendor.roomPlayers.shangzuo
       player.canKill = true
     _updatePlayerGameStatus()
@@ -221,6 +230,8 @@ angular.module('vlg')
   GameService.$on 'night', () ->
     $rootScope.$broadcast '$night'
 
+  dataVendor.updatePlayerGameStatus = () ->
+    _updatePlayerGameStatus()
 
   return dataVendor
 ])

@@ -292,9 +292,11 @@ window.GameServer = (gamecallback) ->
         on_startvote()
       when "startvoteinsidepk"
         xx = (Number n for n in mess[1].split('_'))
+        xx = [1, 2]
         on_startvoteinsidepk(xx)
       when "startvoteoutsidepk"
         xx = (Number n for n in mess[1].split('_'))
+        xx = [1, 2]
         on_startvoteoutsidepk(xx)
       else
         break

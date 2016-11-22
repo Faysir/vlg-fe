@@ -292,11 +292,11 @@ window.GameServer = (gamecallback) ->
         on_startvote()
       when "startvoteinsidepk"
         xx = (Number n for n in mess[1].split('_'))
-        xx = [1, 2]
+        # xx = [1, 2]
         on_startvoteinsidepk(xx)
       when "startvoteoutsidepk"
         xx = (Number n for n in mess[1].split('_'))
-        xx = [1, 2]
+        # xx = [1, 2]
         on_startvoteoutsidepk(xx)
       else
         break
@@ -345,22 +345,22 @@ window.GameServer = (gamecallback) ->
   this.kill = (number) ->
     if not (game_role == window.GameServer.ROLE_KILLER) then return 2
     if this.isDead() then return 1
-    ws.send("sha #{number}")
+    ws.send("action sha #{number}")
     return 0
   this.check = (number) ->
     if not (game_role == window.GameServer.ROLE_COP) then return 2
     if this.isDead() then return 1
-    ws.send("yan #{number}")
+    ws.send("action yan #{number}")
     return 0
   this.vote = (number) ->
     if this.isDead() then return 1
-    ws.send("vote #{number}")
+    ws.send("action vote #{number}")
     return 0
   this.baofei = () ->
-    ws.send("baofei")
+    ws.send("action baofei")
     return 0
   this.end_speak = () ->
-    ws.send("speakend")
+    ws.send("action speakend")
     return 0
 
   this.startrec = () ->

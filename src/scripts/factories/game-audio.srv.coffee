@@ -1,6 +1,6 @@
 angular.module('vlg')
 
-.factory 'GameAudioService', ['GameService', 'GameAudioValue', (GameService, GameAudioValue)->
+.factory 'GameAudioService', ['GameService', 'GameAudioValue', 'GameConstant', (GameService, GameAudioValue, GameConstant)->
   audioItems = [].concat(GameAudioValue)
   for item, i in audioItems
     item.player = new Audio()
@@ -35,28 +35,47 @@ angular.module('vlg')
     serviceObj.playAudio "greetings", callback
     return
 
-  serviceObj.onSpeak = (playerIdx, callback) ->
-    playerIdx = parseInt playerIdx
-    if isNaN(playerIdx) then return
-    serviceObj.playAudio "speak-#{playerIdx+1}", callback
+  serviceObj.onOutsidePK = (callback) ->
+    serviceObj.playAudio "out-field-pk", callback
     return
 
-  serviceObj.onBaofei = (playerIdx, callback) ->
-    playerIdx = parseInt playerIdx
-    if isNaN(playerIdx) then return
-    serviceObj.playAudio "baofei-#{playerIdx+1}", callback
+  serviceObj.onInsidePK = serviceObj.onPK = (callback) ->
+    serviceObj.playAudio "pk", callback
     return
 
-  serviceObj.onLastwords = (playerIdx, callback) ->
-    playerIdx = parseInt playerIdx
-    if isNaN(playerIdx) then return
-    serviceObj.playAudio "lastwords-#{playerIdx+1}", callback
+  serviceObj.onVote = (callback) ->
+    serviceObj.playAudio "vote", callback
     return
 
-  serviceObj.onOut = (playerIdx, callback) ->
-    playerIdx = parseInt playerIdx
-    if isNaN(playerIdx) then return
-    serviceObj.playAudio "out-#{playerIdx+1}", callback
+  serviceObj.onWin = (resultCode, callback) ->
+    if resultCode == GameConstant.RESULT_KILLERS_DIED
+      serviceObj.playAudio "win-cops", callback
+    else
+      serviceObj.playAudio "win-killers", callback
+    return
+
+  serviceObj.onSpeak = (playerNumber, callback) ->
+    playerNumber = parseInt playerNumber
+    if isNaN(playerNumber) then return
+    serviceObj.playAudio "speak-#{playerNumber}", callback
+    return
+
+  serviceObj.onBaofei = (playerNumber, callback) ->
+    playerNumber = parseInt playerNumber
+    if isNaN(playerNumber) then return
+    serviceObj.playAudio "baofei-#{playerNumber}", callback
+    return
+
+  serviceObj.onLastwords = (playerNumber, callback) ->
+    playerNumber = parseInt playerNumber
+    if isNaN(playerNumber) then return
+    serviceObj.playAudio "lastwords-#{playerNumber}", callback
+    return
+
+  serviceObj.onOut = (playerNumber, callback) ->
+    playerNumber = parseInt playerNumber
+    if isNaN(playerNumber) then return
+    serviceObj.playAudio "out-#{playerNumber}", callback
     return
 
   return serviceObj

@@ -30,6 +30,9 @@ angular.module('vlg')
       if not player.invalid
         if dataVendor.gameInfo.role != GameConstant.ROLE_KILLER then player.canKill = false
         if dataVendor.gameInfo.role != GameConstant.ROLE_COP then player.canCheck = false
+        if not dataVendor.killEnabled then player.canKill = false
+        if not dataVendor.checkEnabled then player.canCheck = false
+        if not dataVendor.voteEnabled then player.canVote = false
         if player.isDead or GameService.gameServer.isDead()
           player.canCheck = false
           player.canVote = false
@@ -125,7 +128,7 @@ angular.module('vlg')
     return
 
   GameService.$on 'gameover', (result, score) ->
-    dataVendor.gameInfo = null
+    # dataVendor.gameInfo = null
     dataVendor.diedList.splice(0)
     dataVendor.killEnabled = false
     dataVendor.checkEnabled = false
@@ -222,7 +225,7 @@ angular.module('vlg')
     $rootScope.$broadcast '$checkStart'
   GameService.$on 'kill', () ->
     dataVendor.killEnabled = true
-    dataVendor.baofeiEnabled = GameService.gameServer.isDead()
+    dataVendor.baofeiEnabled = not GameService.gameServer.isDead()
     for player in dataVendor.roomPlayers.shangzuo
       player.canKill = true
     _updatePlayerGameStatus()

@@ -132,18 +132,23 @@ angular.module('vlg')
         $scope.content.currentSpeakerNameOrNumber = $scope.content.currentSpeaker.number
       else
         $scope.content.currentSpeakerNameOrNumber = $scope.content.currentSpeaker.name
-      $scope.content.leftSpeakTime = game.data.currentSpeakTimeLimit
-      $scope.content.leftSpeakTimeString = "#{$scope.content.leftSpeakTime}"
-      speakTimer = setInterval (()->
-        $scope.content.leftSpeakTime -= 1
+      _startRecord = () ->
+        $scope.content.leftSpeakTime = game.data.currentSpeakTimeLimit
         $scope.content.leftSpeakTimeString = "#{$scope.content.leftSpeakTime}"
-        $scope.$apply()
-      ), 1000
-      game.startRecord()
+        speakTimer = setInterval (()->
+          $scope.content.leftSpeakTime -= 1
+          $scope.content.leftSpeakTimeString = "#{$scope.content.leftSpeakTime}"
+          $scope.$apply()
+        ), 1000
+        game.startRecord()
+      if game.data.roomInGame then setTimeout _startRecord, 5000
+      else _startRecord()
       if (typeof $scope.content.currentSpeakerNameOrNumber) == "number"
         if $scope.content.currentSpeaker.isDead
+          game.audio.onLastwords($scope.content.currentSpeakerNameOrNumber)
           pushProgressPlain "#{$scope.content.currentSpeakerNameOrNumber}号玩家有遗言"
         else
+          game.audio.onSpeak($scope.content.currentSpeakerNameOrNumber)
           pushProgressPlain "#{$scope.content.currentSpeakerNameOrNumber}号玩家正在发言"
       else
         pushProgressPlain "玩家#{$scope.content.currentSpeakerNameOrNumber}正在发言"
@@ -158,7 +163,11 @@ angular.module('vlg')
     if game.amKiller() then roleString = "杀手"
     if game.amCop() then roleString = "警察"
     if game.amVillager() then roleString = "平民"
-    pushProgressPlain "游戏开始，你的身份是#{roleString}"
+    partnerString = ""
+    if (not game.amVillager()) and game.data.gameInfo.partners and (game.data.gameInfo.partners.length > 0)
+      partnerString = "，你的队友是" + ("#{n}号" for n in game.data.gameInfo.partners).join("、")
+    specs = game.data.gameInfo.specs
+    pushProgressPlain "游戏开始，你是#{game.data.gameInfo.number}号玩家, 你的身份是#{roleString}。本局游戏#{specs}杀#{specs}警#{partnerString}"
     $scope.$apply()
     return
 
@@ -168,9 +177,11 @@ angular.module('vlg')
       when game.const.RESULT_COPS_DIED then "警察死光了"
       when game.const.RESULT_KILLERS_DIED then "杀手死光了"
       when game.const.RESULT_VILLAGERS_DIED then "平民死光了"
+      else result
     winLoseString = "游戏结束"
     if score < 0 then winLoseString = "你输了"
     if score > 0 then winLoseString = "你赢了"
+    game.audio.onWin(result)
     pushProgressPlain "#{resultString}，#{winLoseString}"
     $scope.$apply()
     return
@@ -188,6 +199,7 @@ angular.module('vlg')
 #    _updatePlayerStatus()
     announceString = "昨夜是平安夜"
     if killed_number then announceString = "昨夜#{killed_number}号玩家被杀"
+    if killed_number then game.audio.onOut(killed_number)
     pushProgressPlain "天亮了，#{announceString}"
     $scope.$apply()
     return
@@ -203,33 +215,41 @@ angular.module('vlg')
 
   $scope.$on '$voteStart', () ->
 #    _updatePlayerStatus()
+    game.audio.onVote()
     pushProgressPlain "现在开始投票"
     $scope.$apply()
     return
   $scope.$on '$pkInsideStart', () ->
 #    _updatePlayerStatus()
+    game.audio.onVote()
     pushProgressPlain "现在开始第二轮投票"
     $scope.$apply()
     return
   $scope.$on '$pkOutsideStart', () ->
 #    _updatePlayerStatus()
+    game.audio.onVote()
     pushProgressPlain "现在开始最后一轮投票"
     $scope.$apply()
     return
   $scope.$on '$voteOver', (evt, kicked_number, equal_list) ->
 #    _updatePlayerStatus()
     if kicked_number
+      game.audio.onOut(kicked_number)
       pushProgressPlain "投票结束，#{kicked_number}号玩家出局"
     else
       equalListString = (("#{num}号" for num in equal_list)).join "、"
       if game.data.voteStage == 1
+        game.audio.onInsidePK()
         pushProgressPlain "投票结束，#{equalListString}玩家平票，进行场内PK"
       else if game.data.voteStage == 2
+        game.audio.onOutsidePK()
         pushProgressPlain "投票结束，#{equalListString}玩家平票，进行场外PK"
       else
         pushProgressPlain "投票结束，#{equalListString}玩家平票，今天是平安日"
     $scope.$apply()
     return
+
+#  $scope.$on '$baofei'
 
   doVote = (player) ->
     if (not player.invalid) and player.canVote

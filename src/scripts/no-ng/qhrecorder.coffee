@@ -183,7 +183,8 @@ window.Qrecorder = (process) ->
   this.startrec = start
   this.stoprec = stop
 
-  mediaerror = () ->
+  mediaerror = (e) ->
+    console.error "Failed to initialize audio recorder", e
     return
 
   navigator.getUserMedia({audio:true}, startmedia, mediaerror)

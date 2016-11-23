@@ -254,7 +254,7 @@ window.GameServer = (gamecallback) ->
         game_role = null
         game_number = null
         if (stat == 6 || stat == 7 || stat == 8)
-          stat = 4
+          stat = 2
         on_gameover x, s
       when "sha"
         on_sha()

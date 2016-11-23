@@ -9,16 +9,40 @@ angular.module('vlg')
 
   serviceObj = {}
 
+  playing = false
+  playList = []
+
+  playCallback = () ->
+    if playList.length > 0
+      playing = true
+      playListItem = (playList.splice(0, 1))[0]
+      audioItem = null
+      for item in audioItems
+        if item.name == playListItem.name
+          audioItem = item
+          break
+      if not audioItem then return
+      # console.log "play", audioItem.name
+      audioItem.player.load()
+      audioItem.player.play()
+      audioItem.player.oncanplay = () ->
+        setTimeout playCallback, (audioItem.player.duration * 1000)
+      audioItem.player.onerror = () ->
+        setTimeout playCallback, 0
+    else
+      playing = false
+    return
+
+  playAudio = (name, callback) ->
+    playList.push({
+      name: name
+      callback: callback
+    })
+    if not playing then playCallback()
+    return
+
   serviceObj.playAudio = (name, callback) ->
-    audioItem = null
-    for item in audioItems
-      if item.name == name
-        audioItem = item
-        break
-    if not audioItem then return
-    audioItem.player.load()
-    audioItem.player.play()
-    setTimeout callback, audioItem.player.duration
+    playAudio(name, callback)
     return
 
   # ==============================================

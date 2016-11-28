@@ -13,6 +13,7 @@ window.GameServer = (gamecallback) ->
   game_number = null
   game_specs = 0 # count of cops or killers
   game_partners = []
+  enable_record = false
   # 0--not log in
   # 1--loged and in hall
   # 2--entered room , xiazuo , not mai
@@ -120,7 +121,7 @@ window.GameServer = (gamecallback) ->
   on_shayan = gamecallback.onshayan # a signal for villagers that night is comming
 
   sendaudio = (blob)->
-    ws.send(blob)
+    if enable_record then ws.send(blob)
 
   rec = new Qrecorder(sendaudio)
 
@@ -364,9 +365,9 @@ window.GameServer = (gamecallback) ->
     return 0
 
   this.startrec = () ->
-    rec.startrec()
+    if enable_record then rec.startrec()
   this.stoprec = () ->
-    rec.stoprec()
+    if enable_record then rec.stoprec()
 
   return
 

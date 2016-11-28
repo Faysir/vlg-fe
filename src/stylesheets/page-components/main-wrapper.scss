@@ -105,11 +105,11 @@
       text-align: center;
       vertical-align: top;
       @include default-anchor(white);
-      &.no-bg {
-        background: none;
-      }
       &:hover {
         background-color: rgba(9, 130, 174, 1);
+      }
+      &.no-bg {
+        background: none;
       }
     }
   }

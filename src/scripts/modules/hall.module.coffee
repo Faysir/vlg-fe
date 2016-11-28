@@ -48,6 +48,14 @@ angular.module('vlg')
         return
       $state.go "room"
 
+  $scope.quickJoin = () ->
+    roomList = switch $scope.content.currentRoomFilter
+      when $scope.ROOM_PUTONG then game.data.putongRooms
+      when $scope.ROOM_JIAZU  then game.data.jiazuRooms
+      else []
+    roomIdx = Math.floor(Math.random() * roomList.length)
+    $scope.enterRoom(roomList[roomIdx])
+
   return
 
 ])

@@ -1,12 +1,57 @@
 
+@import "../common/mixin";
+
 .pg.pg-main {
   .bottom-panel {
+    .bottom-rank-selector {
+      position: absolute;
+      left: 27px;
+      bottom: 40px;
+      width: 70px;
+      a.button-select {
+        display: block;
+        @include default-anchor(white);
+        width: 70px;
+        height: 26px;
+        margin-top: 3px;
+        background-color: #00a2e9;
+        line-height: 26px;
+        text-align: center;
+        font-size: 18px;
+        &:hover {
+          background-color: #00b3ee;
+        }
+      }
+    }
     .bottom-rank-wrapper {
       position: absolute;
       width: 1460px;
       height: 138px;
       left: 97px;
       bottom: 10px;
+      .crown-first,
+      .crown-second,
+      .crown-third {
+        display: block;
+        width: 57px;
+        height: 72px;
+        position: absolute;
+        top: -25px;
+        left: 100px;
+        background-size: 100%;
+      }
+      .crown-first {
+        left: 100px + 0 * 142px;
+        background-image: url("../images/hall/icon-crown-gold.png");
+      }
+      .crown-second {
+        left: 100px + 1 * 142px;
+        background-image: url("../images/hall/icon-crown-silver.png");
+      }
+      .crown-third {
+        left: 100px + 2 * 142px;
+        background-image: url("../images/hall/icon-crown-copper.png");
+      }
       .rank-item {
         position: relative;
         display: inline-block;

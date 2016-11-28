@@ -3,55 +3,89 @@
 @import "../common/variables";
 
 .pg.pg-main.pg-hall {
-  .center-panel {
-    width: 1325px;
-    height: 750px;
-  }
+  .center-box {
+    .center-panel {
+      width: 1325px;
+      height: 750px;
 
-  .room-list {
-    width: 1305px;
-    height: 716px;
-    margin: 16px 10px;
-    .room-item {
-      @include default-anchor(white);
-      display: inline-block;
-      width: 245px;
-      height: 342px;
-      margin: 8px;
-      background-image: url(../images/hall/bg-room.png);
-      position: relative;
-      .room-name,
-      .room-status,
-      .room-member-count {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        color: white;
-        font-size: 16px;
-      }
-      .room-name {
-        top: 0;
-        height: 50px;
-        line-height: 50px;
-      }
-      .room-status {
-        top: 280px;
-        height: 26px;
-        line-height: 26px;
-      }
-      .room-member-count {
-        top: 306px;
-        height: 26px;
-        line-height: 26px;
+      .room-list {
+        width: 1305px;
+        height: 716px;
+        margin: 16px 10px;
+        .room-item {
+          @include default-anchor(white);
+          display: inline-block;
+          width: 245px;
+          height: 342px;
+          margin: 8px;
+          background-image: url(../images/hall/bg-room.png);
+          position: relative;
+          .room-name,
+          .room-status,
+          .room-member-count {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+          }
+          .room-name {
+            top: 0;
+            height: 50px;
+            line-height: 50px;
+          }
+          .room-status {
+            top: 280px;
+            height: 26px;
+            line-height: 26px;
+          }
+          .room-member-count {
+            top: 306px;
+            height: 26px;
+            line-height: 26px;
+          }
+        }
       }
     }
-  }
 
-  .circle-list2 {
-    position: absolute;
-    left: 1331px;
-    top: 20px;
+    .paginator {
+      position: absolute;
+      left: 1325px;
+      top: 550px;
+      width: 33px;
+      .page-prev,
+      .page-next {
+        display: block;
+        width: 33px;
+        height: 59px;
+        background-size: 100% 100%;
+        margin-bottom: 33px;
+      }
+      .page-prev {
+        background-image: url("../images/hall/page-prev.png");
+      }
+      .page-next {
+        background-image: url("../images/hall/page-next.png");
+      }
+    }
+
+    .circle-item2.button-quick-join {
+      position: absolute;
+      top: 580px;
+      left: 1380px;
+      width: 48px;
+      height: 48px;
+      font-size: 18px;
+      line-height: 24px;
+      padding: 21px;
+    }
+
+    .circle-list2 {
+      position: absolute;
+      left: 1331px;
+      top: 20px;
+    }
   }
 
   .bottom-panel {
@@ -90,7 +124,7 @@
       position: absolute;
       right: 6px;
       bottom: 10px;
-      width: ($grouped-button-width + 12px) * 4;
+      width: ($grouped-button-width + 12px) * 2;
       height: ($grouped-button-height + 12px) * 2;
       .button-item {
         margin: 6px;

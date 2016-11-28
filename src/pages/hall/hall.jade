@@ -11,6 +11,13 @@
                     .room-name {{ room.name }} \#{{ room.id }}
                     .room-status 空房间
                     .room-member-count {{ room.playerCount }}/{{ room.maxPlayerCount }}
+        .paginator
+            a.page-prev(href="javascript:;", ng-click="prevPage()")
+            a.page-next(href="javascript:;", ng-click="nextPage()")
+        a.circle-item2.button-quick-join(href="javascript:;", ng-click="quickJoin()")
+            | 快速
+            br
+            | 加入
         .circle-list2
             .circle-item2(ng-click="changeRoomFilter(ROOM_PUTONG)", ng-class="content.currentRoomFilter == ROOM_PUTONG ? 'active' : ''") 普通房
             .circle-item2 精英房
@@ -18,18 +25,20 @@
             .circle-item2 大师房
     .right-panel-wrapper
     .bottom-panel
-        .paginator
-            .nav-prev(ng-click="prevPage()")
-            .nav-next(ng-click="nextPage()")
-            .center-sphere
+        .bottom-rank-selector
+            a.button-select(href="javascript:;") 等级
+            a.button-select(href="javascript:;") 名气
+            a.button-select(href="javascript:;") 魅力
+        .bottom-rank-wrapper
+        //.paginator
+        //    .nav-prev(ng-click="prevPage()")
+        //    .nav-next(ng-click="nextPage()")
+        //    .center-sphere
         .button-group
-            a.button-item(href="javascript:;") 家族
             a.button-item(href="javascript:;") 论坛
             a.button-item(href="javascript:;") 打包
-            a.button-item(href="javascript:;") 聊天
-            a.button-item.no-bg
-            a.button-item.no-bg
-            a.button-item.no-bg
-            a.button-item(href="javascript:;") 排行
+            a.button-item(href="javascript:;") 活动
+            a.button-item(href="javascript:;") 家族
+            // a.button-item.no-bg
 
 

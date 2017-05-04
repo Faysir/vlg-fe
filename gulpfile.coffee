@@ -3,6 +3,7 @@ gulp.sass = require('gulp-sass')
 gulp.jade = require('gulp-jade')
 gulp.coffee = require('gulp-coffee')
 gulp.concat = require('gulp-concat')
+webserver = require('gulp-webserver')
 
 gulp.task('vendor:js', ->
   gulp.src(['bower_components/jquery/dist/jquery.min.js'
@@ -87,9 +88,22 @@ gulp.task('watch:scss', ['scss'], ->
   gulp.watch(['src/stylesheets/**/*.scss'], ['scss'])
 )
 
+gulp.task('server', ->
+  gulp.src(['./www/'])
+    .pipe(webserver({
+      port: 8088,#端口
+      host: 'localhost',#域名
+      liveload: true,#实时刷新代码。不用f5刷新
+      directoryListing: {
+        path: './www/',
+        enable: true,
+        open: true,
+        fallback: 'index.html'
+        }
+      })))
 
 gulp.task('watch', ['vendor', 'watch:coffee', 'watch:jade', 'watch:scss'])
 gulp.task('deploy', ['vendor', 'coffee', 'scss', 'jade'])
 gulp.task('deploy_src', ['vendor:source', 'coffee', 'scss', 'jade'])
 
-gulp.task('default', ['watch'])
+gulp.task('default', ['watch','server'])

@@ -1,0 +1,155 @@
+<html lang="en">
+<head>
+    <title>AES (Advanced Encryption Standard) JavaScript implementation in Counter Mode | Movable Type Scripts</title>
+    <meta charset="utf-8">
+	<script type="text/javascript" src="vendor/scripts/angular.min.js"></script>
+	<script type="text/javascript" src="vendor/scripts/angular-route.min.js"></script>
+	<script type="text/javascript" src="vendor/scripts/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="vendor/scripts/Barrett.js"></script>
+	<script type="text/javascript" src="vendor/scripts/BigInt.js"></script>
+	<script type="text/javascript" src="vendor/scripts/jquery.min.js"></script>
+	<script type="text/javascript" src="vendor/scripts/recorder.js"></script>
+	<script type="text/javascript" src="vendor/scripts/RSA.js"></script>
+	<script type="text/javascript" src="vendor/scripts/script.js"></script>
+</head>
+<body>
+<!-- log in -->
+<HR SIZE=5>
+<input type="text" placeholder="phone number" id="phone-num-login"><br>
+<input type="text" placeholder="password" id="passwd-login"><br>
+<input type="submit" value="Log in" id="login"><br>
+<!-- game hall -->
+<HR SIZE=5>
+<div id="putongfangplayernum">putongfang:<br></div><br>
+<div id="jiazufangplayernum">jiazufang:<br></div><br>
+<input type="text" placeholder="putongfang id" id="putongfang"><br>
+<input type="submit" value="enter" id="enterputongfang"><br>
+<input type="text" placeholder="jiazufang id" id="jiazufang"><br>
+<input type="submit" value="enter" id="enterjiazufang"><br>
+<!-- game room -->
+<HR SIZE=5>
+<div id="queue_mai">mai:<br></div><br>
+<div id="queue_zuo">zuo:<br></div><br>
+<div id="shangmaiplayer">shangmai player in this room:<br></div><br>
+<div id="shangzuoplayer">shangzuo player in this room:<br></div><br>
+<div id="guanzhongplayer">guanzhong player in this room:<br></div><br>
+<div id="speaker">speaker:<br></div><br>
+<div id="speaktime">time left for speaker:<br></div><br>
+<input type="submit" value="shangmai" id="shangmai"><br>
+<input type="submit" value="xiamai" id="xiamai"><br>
+<input type="submit" value="shangzuo" id="shangzuo"><br>
+<input type="submit" value="xiazuo" id="xiazuo"><br>
+<input type="submit" value="backtohall" id="hall"><br>
+<!-- game started -->
+<HR SIZE=5>
+<input type="text" placeholder="player" id="killone"><br>
+<input type="submit" value="kill" id="kill"><br>
+<input type="text" placeholder="player" id="arrestone"><br>
+<input type="submit" value="arrest" id="arrest"><br>
+<input type="text" placeholder="player" id="voteone"><br>
+<input type="submit" value="vote" id="vote"><br>
+<!-- speech -->
+<HR SIZE=5>
+<div id="speakcontent">speech:<br></div><br>
+
+<script type="text/javascript">
+gcallback={};
+function on_roomputong_playernum(n)
+{
+	//console.log(n)
+	document.getElementById('putongfangplayernum').innerHTML = 'putongfang:<br>';
+	for(var i=0; i<n.length;i++){
+		document.getElementById('putongfangplayernum').innerHTML += i+':'+n[i]+'   ';
+	}
+};
+
+
+function on_roomjiazu_playernum(n)
+{
+	//console.log(n)
+	document.getElementById('jiazufangplayernum').innerHTML = 'putongfang:<br>';
+	for(var i=0; i<n.length;i++){
+		document.getElementById('jiazufangplayernum').innerHTML += i+':'+n[i]+'   ';
+	}
+};
+
+
+function on_enterroom(s)
+{
+	if(s==0)
+	{
+		console.log('enter room succ');
+	}
+	else
+	console.log('enter room failed');
+	//document.getElementById('putongfangplayernum').innerHTML += n+'<br>';
+};
+
+function on_login(s)
+{
+	if(s==0)
+	console.log('log in succ');
+	else
+	console.log('log in failed');
+	//document.getElementById('putongfangplayernum').innerHTML += n+'<br>';
+};
+function on_roomplayer(players,status)
+{
+	document.getElementById('shangmaiplayer').innerHTML = 'shangmai player in this room:<br>';
+	for(var i=0; i<players[0].length;i++){
+		document.getElementById('shangmaiplayer').innerHTML += i+':'+players[0][i]+':'+status[0][i]+'   ';
+	}
+	document.getElementById('shangzuoplayer').innerHTML = 'shangzuo player in this room:<br>';
+	for(var i=0; i<players[1].length;i++){
+		document.getElementById('shangzuoplayer').innerHTML += i+':'+players[1][i]+':'+status[1][i]+'   ';
+	}
+	document.getElementById('guanzhongplayer').innerHTML = 'guanzhong player in this room:<br>';
+	for(var i=0; i<players[2].length;i++){
+		document.getElementById('guanzhongplayer').innerHTML += i+':'+players[2][i]+':'+status[2][i]+'   ';
+	}
+}
+function on_speaker(speaker){
+document.getElementById('queue_mai').innerHTML = "mai:"+speaker+"<br>";
+}
+gcallback.onlogin = on_login;
+gcallback.onputong = on_roomputong_playernum;
+gcallback.onjiazu = on_roomjiazu_playernum;
+gcallback.onenterroom = on_enterroom;
+gcallback.onroomplayer = on_roomplayer;
+gcallback.onspeaker = on_speaker;
+//gcallback.onshang
+gameserver = new GameServer(gcallback);
+$('#login').click(function(){
+	if(0!=gameserver.login($('#phone-num-login').val(),$('#passwd-login').val()))
+	{
+		alert('cannot log in');
+	}
+});
+$('#enterputongfang').click(function(){
+	if(0!=gameserver.enterputong($('#putongfang').val()))
+		alert("cannot enter room")
+});
+$('#shangmai').click(function(){
+	if(0!=gameserver.shangmai())
+		alert("cannot shangmai")
+});
+$('#xiamai').click(function(){
+	if(0!=gameserver.xiamai())
+		alert("cannot xiamai")
+});
+$('#shangzuo').click(function(){
+	if(0!=gameserver.shangzuo())
+		alert("cannot shangzuo")
+});
+$('#xiazuo').click(function(){
+	if(0!=gameserver.xiazuo())
+		alert("cannot xiazuo")
+});
+$('#hall').click(function(){
+	if(0!=gameserver.quitroom())
+		alert('cannot return hall')
+});
+</script>
+
+</body>
+</html>
